@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Buttons</title>
+    <style>
+        .task-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .task-button {
+            padding: 20px;
+            text-align: center;
+            background-color: #e0e0e0;
+            border: 1px solid #000;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Task Management</h1>
+    <div class="task-grid">
+        {% for task in task_types %}
+            <form method="post" class="task-button">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="start">
+                <input type="hidden" name="task_type" value="{{ task }}">
+                <button type="submit">Start {{ task }} Task</button>
+            </form>
+            <form method="post" class="task-button">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="end">
+                <input type="hidden" name="task_type" value="{{ task }}">
+                <button type="submit">End {{ task }} Task</button>
+            </form>
+        {% endfor %}
+    </div>
+</body>
+</html>
