@@ -5,26 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d24b2c1c-8b24-4921-91fd-c6d46250ef10" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/krono/magus/migrations/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/krono/magus/templates/magus/task_buttons.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/krono/magus/templates/magus/task_list.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/krono/magus/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/krono/magus/migrations/0001_initial.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kronoMagus/kronoMagus/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/krono/krono/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kronoMagus/kronoMagus/asgi.py" beforeDir="false" afterPath="$PROJECT_DIR$/krono/krono/asgi.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kronoMagus/kronoMagus/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/krono/krono/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kronoMagus/kronoMagus/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/krono/krono/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kronoMagus/kronoMagus/wsgi.py" beforeDir="false" afterPath="$PROJECT_DIR$/krono/krono/wsgi.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kronoMagus/magus/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/krono/magus/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kronoMagus/magus/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/krono/magus/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kronoMagus/magus/apps.py" beforeDir="false" afterPath="$PROJECT_DIR$/krono/magus/apps.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kronoMagus/magus/migrations/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/krono/magus/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kronoMagus/magus/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/krono/magus/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kronoMagus/magus/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/krono/magus/tests.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kronoMagus/magus/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/krono/magus/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kronoMagus/manage.py" beforeDir="false" afterPath="$PROJECT_DIR$/krono/manage.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,6 +45,11 @@
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Spencer Lay\PycharmProjects\gaebolg\krono\magus\templates\magus" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
