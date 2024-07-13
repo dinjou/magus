@@ -17,19 +17,42 @@
             border: 1px solid #000;
             cursor: pointer;
         }
+        .task-button-start {
+            background-color: #d4edda;
+        }
+        .task-button-end {
+            background-color: #f8d7da;
+        }
+        .error-message {
+            color: red;
+        }
+        .recent-task {
+            margin-top: 20px;
+        }
+        .ongoing-task {
+            color: green;
+        }
+        .ended-task {
+            color: red;
+        }
     </style>
 </head>
 <body>
     <h1>Task Management</h1>
+    <p>Logged in as: {{ user.username }}</p>
+    <a href="{% url 'magus:clock_out' %}">Clock Out</a>
+    {% if error_message %}
+        <p class="error-message">{{ error_message }}</p>
+    {% endif %}
     <div class="task-grid">
         {% for task in task_types %}
-            <form method="post" class="task-button">
+            <form method="post" class="task-button task-button-start">
                 {% csrf_token %}
                 <input type="hidden" name="action" value="start">
                 <input type="hidden" name="task_type" value="{{ task }}">
                 <button type="submit">Start {{ task }} Task</button>
             </form>
-            <form method="post" class="task-button">
+            <form method="post" class="task-button task-button-end">
                 {% csrf_token %}
                 <input type="hidden" name="action" value="end">
                 <input type="hidden" name="task_type" value="{{ task }}">
@@ -37,5 +60,19 @@
             </form>
         {% endfor %}
     </div>
+    {% if recent_task %}
+        <div class="recent-task">
+            <h2>Most Recently Started Task</h2>
+            <p>Task: {{ recent_task.task_type }}</p>
+            <p>Start Time: {{ recent_task.start_time }}</p>
+            <p>Status:
+                {% if is_ongoing %}
+                    <span class="ongoing-task">Ongoing</span>
+                {% else %}
+                    <span class="ended-task">Ended</span>
+                {% endif %}
+            </p>
+        </div>
+    {% endif %}
 </body>
 </html>
