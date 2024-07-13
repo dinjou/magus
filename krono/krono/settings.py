@@ -85,7 +85,7 @@ DATABASES = {
         'NAME': 'magus',
         'USER': 'magus_admin',
         'PASSWORD': 'courage',
-        'HOST': '100.112.126.7',
+        'HOST': '10.200.41.252',
         'PORT': '5432',
     }
 }
@@ -132,3 +132,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
+

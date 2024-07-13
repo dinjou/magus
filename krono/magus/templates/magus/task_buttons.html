@@ -23,17 +23,19 @@
         .task-button-end {
             background-color: #f8d7da;
         }
-        .error-message {
-            color: red;
+        .message {
+            padding: 10px;
+            margin: 10px 0;
         }
-        .recent-task {
-            margin-top: 20px;
+        .message-success {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
         }
-        .ongoing-task {
-            color: green;
-        }
-        .ended-task {
-            color: red;
+        .message-error {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
         }
     </style>
 </head>
@@ -41,9 +43,15 @@
     <h1>Task Management</h1>
     <p>Logged in as: {{ user.username }}</p>
     <a href="{% url 'magus:clock_out' %}">Clock Out</a>
-    {% if error_message %}
-        <p class="error-message">{{ error_message }}</p>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="message {% if message.tags %}message-{{ message.tags }}{% endif %}">
+                {{ message }}
+            </div>
+        {% endfor %}
     {% endif %}
+
     <div class="task-grid">
         {% for task in task_types %}
             <form method="post" class="task-button task-button-start">
@@ -60,6 +68,7 @@
             </form>
         {% endfor %}
     </div>
+
     {% if recent_task %}
         <div class="recent-task">
             <h2>Most Recently Started Task</h2>
