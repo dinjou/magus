@@ -58,19 +58,19 @@
                 });
             });
 
-            // Refresh CSRF token on page load
-            fetch("{% url 'magus:csrf' %}", {
-                method: 'GET',
-                headers: {
-                    'X-CSRFToken': '{{ csrf_token }}',
-                }
-            }).then(response => response.json()).then(data => {
-                document.querySelectorAll('input[name="csrfmiddlewaretoken"]').forEach(input => {
-                    input.value = data.csrfToken;
+            // Heartbeat mechanism
+            setInterval(function () {
+                fetch("{% url 'magus:heartbeat' %}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    },
+                    body: JSON.stringify({ status: 'alive' })
+                }).catch(error => {
+                    console.error('Error sending heartbeat:', error);
                 });
-            }).catch(error => {
-                console.error('Error refreshing CSRF token:', error);
-            });
+            }, 30000); // Send heartbeat every 30 seconds
         });
     </script>
 </head>

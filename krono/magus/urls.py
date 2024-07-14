@@ -5,6 +5,7 @@ app_name = 'magus'
 
 urlpatterns = [
     path('csrf/', views.get_csrf_token, name='csrf'),
+    path('heartbeat/', views.heartbeat, name='heartbeat'),
     path('register/', views.register, name='register'),
     path('clock_in/', views.clock_in, name='clock_in'),
     path('clock_out/', views.clock_out, name='clock_out'),

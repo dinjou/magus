@@ -1,3 +1,5 @@
+import json
+
 from django.http import JsonResponse
 from django.middleware.csrf import get_token
 from django.shortcuts import render, redirect
@@ -5,6 +7,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.template.base import logger
+from django.views.decorators.csrf import csrf_exempt
 
 from .forms import UserRegisterForm
 from .models import Task, Profile
@@ -105,3 +108,15 @@ def task_list(request):
 
 def get_csrf_token(request):
     return JsonResponse({'csrfToken': get_token(request)})
+
+@login_required
+@csrf_exempt
+def heartbeat(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        if data.get('status') == 'alive':
+            request.user.profile.last_heartbeat = timezone.now()
+            request.user.profile.save()
+            return JsonResponse({'status': 'ok'})
+    return JsonResponse({'status': 'error'}, status=400)
+
