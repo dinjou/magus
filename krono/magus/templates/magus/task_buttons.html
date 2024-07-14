@@ -37,7 +37,28 @@
             border: 1px solid #f5c6cb;
             color: #721c24;
         }
+        .message-warning {
+            background-color: #fff3cd;
+            border: 1px solid #ffeeba;
+            color: #856404;
+        }
     </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const ongoingTask = {{ is_ongoing|yesno:"true,false" }};
+            document.querySelectorAll('.task-button-start').forEach(button => {
+                button.addEventListener('click', function (event) {
+                    if (ongoingTask) {
+                        event.preventDefault();
+                        const confirmInterrupt = confirm("Your previous task has not yet been marked as complete. Would you like me to mark it as interrupted?");
+                        if (confirmInterrupt) {
+                            this.submit();
+                        }
+                    }
+                });
+            });
+        });
+    </script>
 </head>
 <body>
     <h1>Task Management</h1>

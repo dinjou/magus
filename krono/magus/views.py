@@ -2,18 +2,19 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
+from django.template.base import logger
 
 from .forms import UserRegisterForm
 from .models import Task, Profile
 from django.utils import timezone
 from django.contrib import messages
 
-
 TASK_TYPES = [
     "Outages", "Installs", "Tier 2 Assistance", "AE Escalations",
     "Emails/Messages", "CWRV", "VoIP", "NOC Tasks", "Meetings",
     "Meal Break", "Other", "Total"
 ]
+
 
 def register(request):
     if request.method == 'POST':
@@ -28,6 +29,7 @@ def register(request):
     else:
         form = UserRegisterForm()
     return render(request, 'magus/register.html', {'form': form})
+
 
 def clock_in(request):
     if request.method == 'POST':
@@ -45,6 +47,7 @@ def clock_in(request):
         form = AuthenticationForm()
     return render(request, 'magus/clock_in.html', {'form': form})
 
+
 @login_required
 def clock_out(request):
     user = request.user
@@ -61,13 +64,17 @@ def task_buttons(request):
         task_type = request.POST.get('task_type')
 
         if action == 'start':
+            # Check if there is an ongoing task
             existing_task = Task.objects.filter(user=request.user, end_time__isnull=True).first()
             if existing_task:
                 existing_task.end_time = timezone.now()
                 existing_task.interrupted = True
                 existing_task.save()
+                messages.warning(request, f"Interrupted {existing_task.task_type} task and started {task_type} task.")
+            else:
+                messages.success(request, f"Started {task_type} task.")
             Task.objects.create(user=request.user, task_type=task_type, start_time=timezone.now())
-            messages.success(request, f"Started {task_type} task.")
+            return redirect('magus:task_buttons')
 
         elif action == 'end':
             task = Task.objects.filter(user=request.user, task_type=task_type, end_time__isnull=True).first()
@@ -77,7 +84,7 @@ def task_buttons(request):
                 messages.success(request, f"Ended {task_type} task.")
             else:
                 messages.error(request, f"No active {task_type} task to end.")
-        return redirect('magus:task_buttons')
+            return redirect('magus:task_buttons')
 
     recent_task = Task.objects.filter(user=request.user).order_by('-start_time').first()
 
@@ -89,9 +96,7 @@ def task_buttons(request):
     })
 
 
-
 @login_required
 def task_list(request):
     tasks = Task.objects.all()
     return render(request, 'magus/task_list.html', {'tasks': tasks})
-
