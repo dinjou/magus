@@ -1,3 +1,5 @@
+from django.http import JsonResponse
+from django.middleware.csrf import get_token
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
@@ -100,3 +102,6 @@ def task_buttons(request):
 def task_list(request):
     tasks = Task.objects.all()
     return render(request, 'magus/task_list.html', {'tasks': tasks})
+
+def get_csrf_token(request):
+    return JsonResponse({'csrfToken': get_token(request)})

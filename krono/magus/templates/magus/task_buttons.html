@@ -57,6 +57,20 @@
                     }
                 });
             });
+
+            // Refresh CSRF token on page load
+            fetch("{% url 'magus:csrf' %}", {
+                method: 'GET',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                }
+            }).then(response => response.json()).then(data => {
+                document.querySelectorAll('input[name="csrfmiddlewaretoken"]').forEach(input => {
+                    input.value = data.csrfToken;
+                });
+            }).catch(error => {
+                console.error('Error refreshing CSRF token:', error);
+            });
         });
     </script>
 </head>
