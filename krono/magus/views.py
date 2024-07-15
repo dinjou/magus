@@ -17,7 +17,7 @@ from django.contrib import messages
 TASK_TYPES = [
     "Outages", "Installs", "Tier 2 Assistance", "AE Escalations",
     "Emails/Messages", "CWRV", "VoIP", "NOC Tasks", "Meetings",
-    "Meal Break", "Other", "Total"
+    "Meal Break", "Other"
 ]
 
 
@@ -46,6 +46,7 @@ def clock_in(request):
             if user is not None:
                 login(request, user)
                 user.profile.clock_in_time = timezone.now()
+                user.profile.active_session = True
                 user.profile.save()
                 return redirect('magus:task_buttons')
     else:
@@ -56,10 +57,20 @@ def clock_in(request):
 @login_required
 def clock_out(request):
     user = request.user
-    user.profile.clock_out_time = timezone.now()
-    user.profile.save()
-    logout(request)
-    return redirect('magus:clock_in')
+    # Check for active tasks
+    active_tasks = Task.objects.filter(user=user, end_time__isnull=True)
+    if active_tasks.exists():
+        # Prevent clock out and notify the user
+        messages.error(request, 'You have active tasks that need to be ended before clocking out.')
+        return redirect('magus:task_buttons')
+
+    if request.method == 'POST':
+        user.profile.active_session = False
+        user.profile.save()
+        logout(request)
+        return redirect('magus:clock_in')
+    return render(request, 'magus/clock_out.html')
+
 
 
 @login_required

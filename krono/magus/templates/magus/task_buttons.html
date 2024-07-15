@@ -10,6 +10,16 @@
     <script src="{% static '/magus/js/task_buttons.js' %}" defer></script>
 </head>
 <body>
+    <div class="floating-messages">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="message {% if message.tags %}message-{{ message.tags }}{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+
     <header>
         <p>Logged in as: {{ user.username }}</p>
         <form method="post" action="{% url 'magus:clock_out' %}">
@@ -17,7 +27,6 @@
             <button type="submit" class="clock-out-button">Clock Out</button>
         </form>
     </header>
-
 
     <main>
         <div class="task-grid">
@@ -41,14 +50,6 @@
     <footer>
         <span>Latest Task Information:</span> <!-- New span element -->
 
-        {% if messages %}
-            {% for message in messages %}
-                <div class="message {% if message.tags %}message-{{ message.tags }}{% endif %}">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        {% endif %}
-
         {% if recent_task %}
             <div class="recent-task">
                 <span class="label">Task:</span> <span>{{ recent_task.task_type }}</span>
@@ -64,6 +65,5 @@
             </div>
         {% endif %}
     </footer>
-
 </body>
 </html>

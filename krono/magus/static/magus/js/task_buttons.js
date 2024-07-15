@@ -26,3 +26,21 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }, 30000); // Send heartbeat every 30 seconds
 });
+
+// Handle floating messages fadeout.
+document.addEventListener('DOMContentLoaded', function () {
+    setTimeout(function () {
+        const messages = document.querySelector('.floating-messages');
+        if (messages) {
+            console.log('Messages found, adding fade-out class.');
+            messages.classList.add('fade-out');
+            setTimeout(function () {
+                messages.remove();
+                console.log('Messages removed.');
+            }, 1000); // Matches the animation duration
+        } else {
+            console.log('No messages found.');
+        }
+    }, 3000); // 3 seconds before starting the fade-out
+});
+

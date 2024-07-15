@@ -7,6 +7,8 @@ class Profile(models.Model):
     last_heartbeat = models.DateTimeField(null=True, blank=True)
     clock_in_time = models.DateTimeField(null=True, blank=True)
     clock_out_time = models.DateTimeField(null=True, blank=True)
+    active_session = models.BooleanField(default=False)  # New field to track active session
+
 
     def __str__(self):
         return self.user.username

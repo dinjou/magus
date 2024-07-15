@@ -11,6 +11,47 @@ body {
     overflow: hidden; /* Prevent body from scrolling */
 }
 
+.floating-messages {
+    position: absolute;
+    top: 10px; /* Adjust as needed */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    width: 80%; /* Adjust as needed */
+    max-width: 600px;
+    text-align: center;
+    transition: opacity 1s ease-in-out; /* Transition for fade-out effect */
+}
+
+.floating-messages.fade-out {
+    opacity: 0;
+}
+
+.message {
+    padding: 10px;
+    margin: 5px 0; /* Adjust margin */
+    border-radius: 5px;
+    box-sizing: border-box; /* Ensure padding is included in width calculation */
+}
+
+.message-success {
+    background-color: #3A8E61; /* Success message background */
+    border: 1px solid #2E6B4C;
+    color: #FFFFFF;
+}
+
+.message-error {
+    background-color: #B35A5A; /* Error message background */
+    border: 1px solid #8E4646;
+    color: #FFFFFF;
+}
+
+.message-warning {
+    background-color: #8B7D5A; /* Subdued yellow background */
+    border: 1px solid #726542; /* Subdued yellow border */
+    color: #FFFFFF;
+}
+
 header, footer {
     background-color: #23272A; /* Slightly lighter dark background */
     text-align: center;
@@ -28,7 +69,6 @@ header {
     border-bottom: 1px solid #40444B; /* Add subtle border */
     box-sizing: border-box; /* Ensure padding is included in width calculation */
 }
-
 
 header p {
     font-size: 0.9em; /* Smaller font size for logged-in user */
