@@ -83,10 +83,10 @@ WSGI_APPLICATION = 'krono.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': '',
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': '',
+        'NAME': 'gaebolgdb',
+        'USER': 'gaebolg',
+        'PASSWORD': 'testing',
+        'HOST': '10.0.4.35',
         'PORT': '5432',
     }
 }

@@ -4,20 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d24b2c1c-8b24-4921-91fd-c6d46250ef10" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/krono/krono/celery.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/krono/magus/migrations/0002_profile_last_heartbeat.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/krono/magus/tasks.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/krono/krono/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/krono/krono/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/krono/krono/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/krono/krono/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/krono/magus/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/krono/magus/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/krono/magus/templates/magus/task_buttons.html" beforeDir="false" afterPath="$PROJECT_DIR$/krono/magus/templates/magus/task_buttons.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/krono/magus/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/krono/magus/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/krono/magus/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/krono/magus/views.py" afterDir="false" />
-    </list>
+    <list default="true" id="d24b2c1c-8b24-4921-91fd-c6d46250ef10" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -49,16 +36,54 @@
   "keyToString": {
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "DefaultHtmlFileTemplate": "HTML File",
+    "Python.manage.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/Spencer Lay/Documents/Projects/Smartaira_Dev/gaebolg/krono/magus/templates/magus",
     "settings.editor.selected.configurable": "preferences.lookFeel"
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Spencer Lay\Documents\Projects\Smartaira_Dev\gaebolg\krono\magus\templates\magus" />
+      <recent name="C:\Users\Spencer Lay\Documents\Projects\Smartaira_Dev\gaebolg\krono\magus\static\magus\css" />
+      <recent name="C:\Users\Spencer Lay\Documents\Projects\Smartaira_Dev\gaebolg\krono\magus\static" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Spencer Lay\Documents\Projects\Smartaira_Dev\gaebolg\krono\magus\static\magus" />
       <recent name="C:\Users\Spencer Lay\PycharmProjects\gaebolg\krono\magus\templates\magus" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="manage" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="gaebolg" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="SDK_NAME" value="Python 3.12 (gaebolg)" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/krono" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/krono/manage.py" />
+      <option name="PARAMETERS" value="runserver" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.manage" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>

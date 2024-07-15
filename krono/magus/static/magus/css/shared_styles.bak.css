@@ -1,0 +1,125 @@
+/* Shared styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #2C2F33; /* Discord-like dark background */
+    color: #FFFFFF; /* White text */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+h1 {
+    color: #7289DA; /* Discord's blurple color for headings */
+}
+
+form {
+    background-color: #23272A; /* Slightly lighter dark background */
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+button {
+    background-color: #7289DA; /* Blurple buttons */
+    color: #FFFFFF;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px 0;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #677BC4; /* Slightly darker blurple on hover */
+}
+
+/* Additional specific styles */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table, .th, .td {
+    border: 1px solid #7289DA; /* Blurple border for table */
+}
+
+.th, .td {
+    padding: 10px;
+    text-align: left;
+}
+
+.th {
+    background-color: #40444B; /* Dark header for table */
+}
+
+.task-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.task-button-form {
+    margin: 0; /* Remove margin around forms */
+    padding: 0; /* Remove padding around forms */
+    display: flex;
+    width: 100%;
+}
+
+/* Button styles */
+.task-button {
+    width: 100%;
+    padding: 5px 0; /* Adjust padding to make the button look nicer */
+    text-align: center;
+    cursor: pointer;
+    color: #FFFFFF;
+    border-radius: 5px;
+    border: 1px solid #40444B; /* Add a subtle border */
+    font-size: 16px;
+    box-sizing: border-box; /* Include padding and border in element's total width and height */
+    margin: 0; /* Remove default button margin */
+}
+
+.task-button-start {
+    background-color: #3A8E61; /* Darker green for start buttons */
+}
+
+.task-button-start:hover {
+    background-color: #2E6B4C; /* Even darker green on hover */
+}
+
+.task-button-end {
+    background-color: #B35A5A; /* Darker red for end buttons */
+}
+
+.task-button-end:hover {
+    background-color: #8E4646; /* Even darker red on hover */
+}
+
+.message {
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+.message-success {
+    background-color: #3A8E61; /* Success message background */
+    border: 1px solid #2E6B4C;
+    color: #FFFFFF;
+}
+
+.message-error {
+    background-color: #B35A5A; /* Error message background */
+    border: 1px solid #8E4646;
+    color: #FFFFFF;
+}
+
+.message-warning {
+    background-color: #FAA61A; /* Warning message background */
+    border: 1px solid #F47B20;
+    color: #FFFFFF;
+}
