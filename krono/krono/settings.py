@@ -83,10 +83,10 @@ WSGI_APPLICATION = 'krono.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'gaebolgdb',
-        'USER': 'gaebolg',
-        'PASSWORD': 'testing',
-        'HOST': '10.0.4.35',
+        'NAME': 'magus_testdb',
+        'USER': 'magus_testdb_admin',
+        'PASSWORD': 'testpassword',
+        'HOST': '127.0.0.1',
         'PORT': '5432',
     }
 }
@@ -145,9 +145,6 @@ CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
 CELERY_BEAT_SCHEDULE = {
     'check-heartbeats-every-minute': {
         'task': 'magus.tasks.check_heartbeats',
-        'schedule': 60.0,  # Run every minute
+        'schedule': 10.0,  # Run every minute
     },
 }
-
-
-
