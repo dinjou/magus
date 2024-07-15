@@ -7,7 +7,7 @@ Tools to quantify business deficiencies to plan a long-term solution.
 Tools to quantify deficiencies and patterns when you hear things like "there's not enough time." 
 
 ## Magus
-### Package ID: `nayru.kronos.magus`
+### Package ID: `gaebolg.kronos.magus`
 
 Designed to be a quick-and-dirty way of tracking when tasks start, stop, and are interrupted.
 
