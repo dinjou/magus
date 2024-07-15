@@ -10,48 +10,60 @@
     <script src="{% static '/magus/js/task_buttons.js' %}" defer></script>
 </head>
 <body>
-    <h1>Task Management</h1>
-    <p>Logged in as: {{ user.username }}</p>
-    <a href="{% url 'magus:clock_out' %}">Clock Out</a>
+    <header>
+        <p>Logged in as: {{ user.username }}</p>
+        <form method="post" action="{% url 'magus:clock_out' %}">
+            {% csrf_token %}
+            <button type="submit" class="clock-out-button">Clock Out</button>
+        </form>
+    </header>
 
-    {% if messages %}
-        {% for message in messages %}
-            <div class="message {% if message.tags %}message-{{ message.tags }}{% endif %}">
-                {{ message }}
-            </div>
-        {% endfor %}
-    {% endif %}
 
-    <div class="task-grid">
-        {% for task in task_types %}
-            <form method="post" class="task-button-form">
-                {% csrf_token %}
-                <input type="hidden" name="action" value="start">
-                <input type="hidden" name="task_type" value="{{ task }}">
-                <button type="submit" class="task-button task-button-start">Start {{ task }} Task</button>
-            </form>
-            <form method="post" class="task-button-form">
-                {% csrf_token %}
-                <input type="hidden" name="action" value="end">
-                <input type="hidden" name="task_type" value="{{ task }}">
-                <button type="submit" class="task-button task-button-end">End {{ task }} Task</button>
-            </form>
-        {% endfor %}
-    </div>
-
-    {% if recent_task %}
-        <div class="recent-task">
-            <h2>Most Recently Started Task</h2>
-            <p>Task: {{ recent_task.task_type }}</p>
-            <p>Start Time: {{ recent_task.start_time }}</p>
-            <p>Status:
-                {% if is_ongoing %}
-                    <span class="ongoing-task">Ongoing</span>
-                {% else %}
-                    <span class="ended-task">Ended</span>
-                {% endif %}
-            </p>
+    <main>
+        <div class="task-grid">
+            {% for task in task_types %}
+                <form method="post" class="task-button-form">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="start">
+                    <input type="hidden" name="task_type" value="{{ task }}">
+                    <button type="submit" class="task-button task-button-start">Start {{ task }} Task</button>
+                </form>
+                <form method="post" class="task-button-form">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="end">
+                    <input type="hidden" name="task_type" value="{{ task }}">
+                    <button type="submit" class="task-button task-button-end">End {{ task }} Task</button>
+                </form>
+            {% endfor %}
         </div>
-    {% endif %}
+    </main>
+
+    <footer>
+        <span>Latest Task Information:</span> <!-- New span element -->
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="message {% if message.tags %}message-{{ message.tags }}{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        {% if recent_task %}
+            <div class="recent-task">
+                <span class="label">Task:</span> <span>{{ recent_task.task_type }}</span>
+                <span class="label">Start:</span> <span>{{ recent_task.start_time }}</span>
+                <span class="label">Status:</span>
+                <span>
+                    {% if is_ongoing %}
+                        Ongoing
+                    {% else %}
+                        Ended
+                    {% endif %}
+                </span>
+            </div>
+        {% endif %}
+    </footer>
+
 </body>
 </html>

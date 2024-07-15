@@ -1,0 +1,171 @@
+/* Shared styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #2C2F33; /* Discord-like dark background */
+    color: #FFFFFF; /* White text */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+h1 {
+    color: #7289DA; /* Discord's blurple color for headings */
+    margin-bottom: 20px;
+}
+
+form {
+    background-color: #23272A; /* Slightly lighter dark background */
+    padding: 20px;
+    border-radius: 5px;
+    border: 1px solid #404a6b;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 400px;
+}
+
+.form-group {
+    width: 100%;
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #404a6b;
+    background-color: #2C2F33;
+    color: #FFFFFF;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.form-group label {
+    margin-bottom: 5px;
+}
+
+.form-group small.help-text {
+    color: #b3b3b3;
+    margin-top: 5px;
+}
+
+form p {
+    width: 100%;
+    margin: 10px 0;
+}
+
+button {
+    background-color: #7289DA; /* Blurple buttons */
+    color: #FFFFFF;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px 0;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+}
+
+button:hover {
+    background-color: #677BC4; /* Slightly darker blurple on hover */
+}
+
+/* Additional specific styles */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table, .th, .td {
+    border: 1px solid #7289DA; /* Blurple border for table */
+}
+
+.th, .td {
+    padding: 10px;
+    text-align: left;
+}
+
+.th {
+    background-color: #40444B; /* Dark header for table */
+}
+
+.task-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.task-button {
+    padding: 20px;
+    text-align: center;
+    background-color: #40444B; /* Dark background for buttons */
+    border: 1px solid #7289DA; /* Blurple border for buttons */
+    cursor: pointer;
+    color: #FFFFFF;
+    border-radius: 5px;
+}
+
+.task-button-start {
+    background-color: #43B581; /* Green for start buttons */
+}
+
+.task-button-end {
+    background-color: #F04747; /* Red for end buttons */
+}
+
+.message {
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+.message-success {
+    background-color: #43B581; /* Green for success messages */
+    border: 1px solid #3E9F72;
+    color: #FFFFFF;
+}
+
+.message-error {
+    background-color: #F04747; /* Red for error messages */
+    border: 1px solid #D33A3A;
+    color: #FFFFFF;
+}
+
+.message-warning {
+    background-color: #FAA61A; /* Yellow for warning messages */
+    border: 1px solid #E69A09;
+    color: #FFFFFF;
+}
+
+.recent-task {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #23272A;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.ongoing-task {
+    color: #43B581; /* Green for ongoing tasks */
+}
+
+.ended-task {
+    color: #F04747; /* Red for ended tasks */
+}
+
+a {
+    color: #7289DA; /* Blurple links */
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}

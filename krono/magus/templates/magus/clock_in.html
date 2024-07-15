@@ -3,17 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clock In</title>
+    <title>MAGUS</title>
     {% load static %}
     <link rel="icon" href="{% static '/magus/favicon.ico' %}" type="image/x-icon">
-    <link rel="stylesheet" href="{% static '/magus/css/shared_styles.css' %}">
+    <link rel="stylesheet" href="{% static '/magus/css/clock_in_styles.css' %}">
 </head>
 <body>
     <h1>MAGUS</h1>
-    <form method="post">
+    <form method="post" action="{% url 'magus:clock_in' %}">
         {% csrf_token %}
-        {{ form.as_p }}
+        <div class="form-group">
+            {{ form.username.label_tag }}
+            {{ form.username }}
+        </div>
+        <div class="form-group">
+            {{ form.password.label_tag }}
+            {{ form.password }}
+        </div>
         <button type="submit">Clock In</button>
+        <a href="{% url 'magus:register' %}" class="register-button">Register</a>
     </form>
 </body>
 </html>
