@@ -1,0 +1,41 @@
+{
+  "name": "magus",
+  "version": "1.0.0",
+  "description": "Reclaim lost time by shedding light on it with data.",
+  "author": "Hyliana, Malathair",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder"
+  },
+  "devDependencies": {
+    "electron": "^31.2.1",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "gaebolg.krono.magus",
+    "productName": "Magus",
+    "files": [
+      "main.js",
+      "preload.js",
+      "package.json",
+      "icon.png"
+    ],
+    "mac": {
+      "target": "dmg",
+      "icon": "path/to/your/icon.icns"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "path/to/your/icon.ico"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb",
+        "rpm"
+      ],
+      "icon": "path/to/your/icon.png"
+    }
+  }
+}
