@@ -11,6 +11,7 @@ python = "^3.12"
 psycopg = {extras = ["binary"], version = "^3.2.1"}
 django = "^5.0.7"
 celery = "^5.4.0"
+redis = "^5.0.7"
 
 
 [build-system]

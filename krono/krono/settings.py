@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-gy#$gyz+afd+si-uj=+2@qt_)mdbkl#@&3e5=%y5_89aj_a1l_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -83,9 +83,9 @@ WSGI_APPLICATION = 'krono.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'magus_testdb',
-        'USER': 'magus_testdb_admin',
-        'PASSWORD': 'testpassword',
+        'NAME': 'magus_db',
+        'USER': 'magus_admin',
+        'PASSWORD': 'I3o&U#54E5ShKPF!JB*3zZMVqqJo1T5*',
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }
@@ -145,6 +145,10 @@ CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
 CELERY_BEAT_SCHEDULE = {
     'check-heartbeats-every-minute': {
         'task': 'magus.tasks.check_heartbeats',
-        'schedule': 10.0,  # Run every minute
+        'schedule': 60.0,  # Run every minute
     },
 }
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://magus.nayru.cc',
+]
