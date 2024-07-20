@@ -16,7 +16,7 @@ from django.contrib import messages
 
 TASK_TYPES = [
     "Outages", "Installs", "Tier 2 Assistance", "AE Escalations",
-    "Emails/Messages", "CWRV", "VoIP", "NOC Tasks", "Meetings",
+    "Emails/Messages", "CWRV", "VoIP", "NOC Tasks","Technician Phone Call", "Meetings",
     "Meal Break", "Non-Meal Break", "IT Support", "Other"
 ]
 

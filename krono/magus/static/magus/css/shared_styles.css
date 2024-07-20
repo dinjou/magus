@@ -139,8 +139,8 @@ footer .message {
 main {
     flex: 1;
     overflow-y: auto;
-    padding-top: 40px; /* Adjust based on header height */
-    padding-bottom: 80px; /* Adjust based on footer height */
+    padding-top: 80px; /* Adjust based on header height */
+    padding-bottom: 8px; /* Adjust based on footer height */
     padding-left: 10px;
     padding-right: 10px;
 }
