@@ -68,6 +68,10 @@ header {
     align-items: center;
     border-bottom: 1px solid #40444B; /* Add subtle border */
     box-sizing: border-box; /* Ensure padding is included in width calculation */
+    margin-bottom: 8px;
+    position: fixed;
+    width: 100%;
+    z-index: 1;
 }
 
 header p {
@@ -140,7 +144,7 @@ main {
     flex: 1;
     overflow-y: auto;
     padding-top: 80px; /* Adjust based on header height */
-    padding-bottom: 8px; /* Adjust based on footer height */
+    padding-bottom: 80px; /* Adjust based on footer height */
     padding-left: 10px;
     padding-right: 10px;
 }
