@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-gy#$gyz+afd+si-uj=+2@qt_)mdbkl#@&3e5=%y5_89aj_a1l_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -184,3 +184,7 @@ LOGGING = {
         },
     },
 }
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://magus.nayru.cc',
+]

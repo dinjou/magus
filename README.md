@@ -19,7 +19,7 @@ Client-side is an electron-wrapper pointed at the local webapp server.
 - ~~Add Clock-In and Clock-Out~~
 - ~~Add Users~~
 - Create Daily Backup (probably just do this locally with cron and rsync)
-- Handle Illegitimate Session Termination
-- Containerize PostgreSQL and Magus into a Docker Container
-- Set up Functional Docker Container in Portainer in Docker Swarm
+- ~~Handle Illegitimate Session Termination~~
+- Containerize PostgreSQL, Redis, Celery, and Magus into a Docker Container
+
 

@@ -20,7 +20,7 @@
     </div>
 
     <header>
-        <p>Logged in as: {{ user.username }}</p>
+	    <p>Logged in as: {{ user.username }}, Last heartbeat at {{ user.profile.last_heartbeat }}</p>
         <form method="post" action="{% url 'magus:clock_out' %}">
             {% csrf_token %}
             <button type="submit" class="clock-out-button">Clock Out</button>
@@ -97,8 +97,16 @@
             }).catch(error => {
                 console.error('Error sending heartbeat:', error);
             });
-        }, 30000); // Send heartbeat every 30 seconds
+        }, 15000); // Send heartbeat every 15 seconds
     });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const header = document.querySelector('header');
+        const main = document.querySelector('main');
+        const headerHeight = header.offsetHeight + 8;
+        main.style.paddingTop = headerHeight + 'px';
+    });
+
 
     // Handle floating messages fadeout.
     document.addEventListener('DOMContentLoaded', function () {
