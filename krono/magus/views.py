@@ -15,9 +15,26 @@ from django.utils import timezone
 from django.contrib import messages
 
 TASK_TYPES = [
-    "Outages", "Installs", "Tier 2 Assistance", "AE Escalations",
-    "Emails/Messages", "CWRV", "VoIP", "NOC Tasks","Technician Assistance", "Meetings",
-    "Meal Break", "Non-Meal Break", "IT Support", "Other"
+    "Outages",
+    "Installs",
+    "Technician Assistance",
+    "Tier 2 Assistance", 
+    "Resident Phone-Call",
+    "AE Escalations",
+    "Non-Outage Troubleshooting",
+    "Offline AP Troubleshooting",
+    "Documentation", 
+    "Lab/Testing",
+    "Shipping",
+    "VoIP",
+    "Heatmaps",
+    "CWRV",
+    "Emails/Messages",
+    "Meetings",
+    "Meal Break",
+    "Non-Meal Break",
+    "IT Support",
+    "Other"
 ]
 
 
@@ -130,4 +147,3 @@ def heartbeat(request):
             request.user.profile.save()
             return JsonResponse({'status': 'ok'})
     return JsonResponse({'status': 'error'}, status=400)
-
