@@ -18,7 +18,7 @@ MAGUS is a full-stack Django Webapp written in Python to streamline self-reporte
 
 My current team is tasked with response to real-time events. For various reasons, we needed to demonstrate the ways our time is used. 
 
-I already had a working understanding of SQL, Python, and Web-Development, so I was able to quickly develop the core of MAGUS over a weekend a few months ago. ChatGPT helped fill in the gaps in my knowledge, and I was able to get this from concept to deployment in about three days.
+I already had a working understanding of SQL, Python, and Web-Development, so I was able to quickly develop the core of MAGUS over a weekend a few months ago. My friend @Malathair and ChatGPT helped fill in the gaps in my knowledge, and I was able to get this from concept to deployment in about three days.
 
 Server-side is a python+django webapp built on PostgreSQL and Redis.
 Client-side is an electron-wrapper pointed at the local webapp server.
