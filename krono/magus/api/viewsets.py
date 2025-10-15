@@ -275,4 +275,238 @@ class TaskViewSet(viewsets.ModelViewSet):
     def perform_update(self, serializer):
         """Mark task as edited when updated"""
         serializer.save(edited_by_user=True)
+    
+    @extend_schema(
+        tags=['tasks'],
+        request={
+            'application/json': {
+                'type': 'object',
+                'properties': {
+                    'task_type_id': {'type': 'integer'},
+                    'notes': {'type': 'string'},
+                },
+                'required': ['task_type_id']
+            }
+        },
+        responses={
+            201: OpenApiResponse(
+                description='Task started successfully',
+                response=TaskSerializer
+            ),
+            400: OpenApiResponse(description='Already tracking a task'),
+        },
+        description='Start tracking a new task',
+    )
+    @action(detail=False, methods=['post'])
+    def start(self, request):
+        """
+        Start tracking a new task.
+        
+        Returns 400 if user is already tracking a task.
+        Use 'interrupt' action instead to stop current and start new.
+        """
+        from django.utils import timezone
+        
+        # Check if already tracking
+        current_task = Task.objects.filter(
+            user=request.user,
+            end_time__isnull=True
+        ).first()
+        
+        if current_task:
+            return Response(
+                {
+                    'error': 'Already tracking a task',
+                    'current_task_id': current_task.id,
+                    'current_task_type': current_task.task_type.name,
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        task_type_id = request.data.get('task_type_id')
+        notes = request.data.get('notes', '')
+        
+        if not task_type_id:
+            return Response(
+                {'error': 'task_type_id is required'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        # Verify task type belongs to user
+        try:
+            task_type = TaskType.objects.get(
+                id=task_type_id,
+                user=request.user,
+                is_archived=False
+            )
+        except TaskType.DoesNotExist:
+            return Response(
+                {'error': 'Invalid task type ID'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        # Create new task
+        task = Task.objects.create(
+            user=request.user,
+            task_type=task_type,
+            start_time=timezone.now(),
+            notes=notes
+        )
+        
+        serializer = self.get_serializer(task)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
+    @extend_schema(
+        tags=['tasks'],
+        responses={
+            200: OpenApiResponse(
+                description='Task stopped successfully',
+                response=TaskSerializer
+            ),
+            400: OpenApiResponse(description='No active task to stop'),
+        },
+        description='Stop the currently tracking task',
+    )
+    @action(detail=False, methods=['post'])
+    def stop(self, request):
+        """
+        Stop the currently tracking task.
+        
+        Returns 400 if no task is currently being tracked.
+        """
+        from django.utils import timezone
+        
+        current_task = Task.objects.filter(
+            user=request.user,
+            end_time__isnull=True
+        ).first()
+        
+        if not current_task:
+            return Response(
+                {'error': 'No active task to stop'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        current_task.end_time = timezone.now()
+        current_task.save()
+        
+        serializer = self.get_serializer(current_task)
+        return Response(serializer.data)
+    
+    @extend_schema(
+        tags=['tasks'],
+        request={
+            'application/json': {
+                'type': 'object',
+                'properties': {
+                    'task_type_id': {'type': 'integer'},
+                    'notes': {'type': 'string'},
+                },
+                'required': ['task_type_id']
+            }
+        },
+        responses={
+            200: OpenApiResponse(
+                description='Task interrupted and new task started',
+                response={
+                    'type': 'object',
+                    'properties': {
+                        'interrupted_task': {'type': 'object'},
+                        'new_task': {'type': 'object'},
+                    }
+                }
+            ),
+            400: OpenApiResponse(description='Invalid request'),
+        },
+        description='Stop current task (mark as interrupted) and start a new one atomically',
+    )
+    @action(detail=False, methods=['post'])
+    def interrupt(self, request):
+        """
+        Atomically stop current task (mark as interrupted) and start new task.
+        
+        This is the preferred way to switch tasks without manually stopping first.
+        """
+        from django.utils import timezone
+        from django.db import transaction
+        
+        task_type_id = request.data.get('task_type_id')
+        notes = request.data.get('notes', '')
+        
+        if not task_type_id:
+            return Response(
+                {'error': 'task_type_id is required'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        # Verify task type belongs to user
+        try:
+            task_type = TaskType.objects.get(
+                id=task_type_id,
+                user=request.user,
+                is_archived=False
+            )
+        except TaskType.DoesNotExist:
+            return Response(
+                {'error': 'Invalid task type ID'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        with transaction.atomic():
+            # Stop current task if exists
+            current_task = Task.objects.filter(
+                user=request.user,
+                end_time__isnull=True
+            ).first()
+            
+            interrupted_task_data = None
+            if current_task:
+                current_task.end_time = timezone.now()
+                current_task.interrupted = True
+                current_task.save()
+                interrupted_task_data = self.get_serializer(current_task).data
+            
+            # Start new task
+            new_task = Task.objects.create(
+                user=request.user,
+                task_type=task_type,
+                start_time=timezone.now(),
+                notes=notes
+            )
+            
+            new_task_data = self.get_serializer(new_task).data
+        
+        return Response({
+            'interrupted_task': interrupted_task_data,
+            'new_task': new_task_data,
+            'message': 'Task switched successfully'
+        })
+    
+    @extend_schema(
+        tags=['tasks'],
+        responses={
+            200: OpenApiResponse(
+                description='Current task or null if not tracking',
+                response=TaskSerializer
+            ),
+        },
+        description='Get the currently tracking task, or null if not tracking',
+    )
+    @action(detail=False, methods=['get'])
+    def current(self, request):
+        """
+        Get the currently tracking task.
+        
+        Returns null if user is not currently tracking anything.
+        """
+        current_task = Task.objects.filter(
+            user=request.user,
+            end_time__isnull=True
+        ).first()
+        
+        if current_task:
+            serializer = self.get_serializer(current_task)
+            return Response(serializer.data)
+        
+        return Response(None)
 
