@@ -1,6 +1,6 @@
-# MAGUS 
+# ![magus icon](https://github.com/Hyliana/gaebolg/blob/c370d729505a8ee35047fe2385bf7cf7794cda2f/krono/magus/static/magus/favicon.ico) MAGUS 
 
-![magus icon](https://github.com/Hyliana/gaebolg/blob/c370d729505a8ee35047fe2385bf7cf7794cda2f/krono/magus/static/magus/favicon.ico)
+
 
 [![Version](https://img.shields.io/badge/version-2.0.0--beta-blue.svg)](https://github.com/yourusername/magus)
 [![Docker](https://img.shields.io/badge/docker-ready-brightgreen.svg)](https://www.docker.com/)
@@ -8,8 +8,6 @@
 [![Django](https://img.shields.io/badge/django-5.0.7-green.svg)](https://www.djangoproject.com/)
 [![React](https://img.shields.io/badge/react-18.3-61DAFB.svg)](https://reactjs.org/)
 [![TypeScript](https://img.shields.io/badge/typescript-5.6-blue.svg)](https://www.typescriptlang.org/)
-
-*formerly known as gaebolg*
 
 ---
 
