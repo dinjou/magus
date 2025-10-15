@@ -68,7 +68,11 @@ class TaskTypeViewSet(viewsets.ModelViewSet):
         """Filter task types by current user and optionally show archived"""
         queryset = TaskType.objects.filter(user=self.request.user)
         
-        # Exclude archived by default
+        # For unarchive action, we need to include archived items
+        if self.action == 'unarchive':
+            return queryset
+        
+        # Exclude archived by default for other actions
         show_archived = self.request.query_params.get('show_archived', 'false').lower() == 'true'
         if not show_archived:
             queryset = queryset.filter(is_archived=False)

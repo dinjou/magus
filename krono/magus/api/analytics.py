@@ -228,7 +228,7 @@ def weekly_breakdown(request):
         'start_date': start_date.isoformat(),
         'end_date': end_date.isoformat(),
         'daily_data': daily_data,
-        'task_type_summary': summary,
+        'task_types': summary,  # Changed from task_type_summary for consistency
         'total_tracked': total_tracked,
         'total_tracked_formatted': f"{int(total_tracked // 3600)}h {int((total_tracked % 3600) // 60)}m",
     })
@@ -303,7 +303,7 @@ def monthly_breakdown(request):
     return Response({
         'start_date': start_date.isoformat(),
         'end_date': end_date.isoformat(),
-        'task_type_summary': summary,
+        'task_types': summary,  # Changed from task_type_summary for consistency
         'total_tracked': total_tracked,
         'total_tracked_formatted': f"{int(total_tracked // 3600)}h {int((total_tracked % 3600) // 60)}m",
     })
