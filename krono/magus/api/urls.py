@@ -1,8 +1,10 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt.views import TokenRefreshView
-from . import views, analytics
+from . import views, analytics, exports
 from .viewsets import TaskTypeViewSet, TaskViewSet
+from .scheduled_exports import ScheduledExportViewSet
+from .api_keys import APIKeyViewSet
 
 app_name = 'api'
 
@@ -10,6 +12,8 @@ app_name = 'api'
 router = DefaultRouter()
 router.register(r'task-types', TaskTypeViewSet, basename='tasktype')
 router.register(r'tasks', TaskViewSet, basename='task')
+router.register(r'scheduled-exports', ScheduledExportViewSet, basename='scheduledexport')
+router.register(r'api-keys', APIKeyViewSet, basename='apikey')
 
 urlpatterns = [
     # Authentication
@@ -31,7 +35,11 @@ urlpatterns = [
     path('analytics/monthly/', analytics.monthly_breakdown, name='analytics_monthly'),
     path('analytics/heatmap/', analytics.heatmap_data, name='analytics_heatmap'),
     
-    # ViewSet routes (task-types, tasks)
+    # Export
+    path('export/csv/', exports.export_csv, name='export_csv'),
+    path('export/download/', exports.download_csv, name='export_download'),
+    
+    # ViewSet routes (task-types, tasks, scheduled-exports)
     path('', include(router.urls)),
 ]
 

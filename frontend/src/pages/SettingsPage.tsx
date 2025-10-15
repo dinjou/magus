@@ -1,11 +1,17 @@
 import { useState } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
+import { Link } from 'react-router-dom'
 import { taskTypesAPI, TaskType, TaskTypeCreate } from '../api/taskTypes'
 import { useAuthStore } from '../store/authStore'
+import ExportSettings from '../components/ExportSettings'
+import APIKeySettings from '../components/APIKeySettings'
+
+type TabType = 'task-types' | 'export' | 'api-keys'
 
 export default function SettingsPage() {
   const queryClient = useQueryClient()
   const { logout } = useAuthStore()
+  const [activeTab, setActiveTab] = useState<TabType>('task-types')
   
   const [showArchived, setShowArchived] = useState(false)
   const [isCreating, setIsCreating] = useState(false)
@@ -122,15 +128,58 @@ export default function SettingsPage() {
         {/* Header */}
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-bold text-accent">Settings</h1>
+          <div className="flex items-center space-x-4">
+            <Link
+              to="/dashboard"
+              className="px-4 py-2 bg-gray-600 text-white rounded hover:bg-opacity-90"
+            >
+              Dashboard
+            </Link>
+            <button
+              onClick={handleLogout}
+              className="px-4 py-2 bg-error text-white rounded hover:bg-opacity-90"
+            >
+              Logout
+            </button>
+          </div>
+        </div>
+
+        {/* Tabs */}
+        <div className="flex space-x-2 mb-6">
           <button
-            onClick={handleLogout}
-            className="px-4 py-2 bg-error text-white rounded hover:bg-opacity-90"
+            onClick={() => setActiveTab('task-types')}
+            className={`px-4 py-2 rounded ${
+              activeTab === 'task-types'
+                ? 'bg-accent text-white'
+                : 'bg-bg-secondary text-text-secondary hover:bg-bg-tertiary'
+            }`}
           >
-            Logout
+            Task Types
+          </button>
+          <button
+            onClick={() => setActiveTab('export')}
+            className={`px-4 py-2 rounded ${
+              activeTab === 'export'
+                ? 'bg-accent text-white'
+                : 'bg-bg-secondary text-text-secondary hover:bg-bg-tertiary'
+            }`}
+          >
+            Export Data
+          </button>
+          <button
+            onClick={() => setActiveTab('api-keys')}
+            className={`px-4 py-2 rounded ${
+              activeTab === 'api-keys'
+                ? 'bg-accent text-white'
+                : 'bg-bg-secondary text-text-secondary hover:bg-bg-tertiary'
+            }`}
+          >
+            API Keys
           </button>
         </div>
 
-        {/* Task Types Section */}
+        {/* Tab Content */}
+        {activeTab === 'task-types' && (
         <div className="bg-bg-secondary rounded-lg p-6">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-2xl font-bold text-text-primary">Task Types</h2>
@@ -318,6 +367,19 @@ export default function SettingsPage() {
             ))}
           </div>
         </div>
+        )}
+
+        {activeTab === 'export' && (
+          <div className="bg-bg-secondary rounded-lg p-6">
+            <ExportSettings />
+          </div>
+        )}
+
+        {activeTab === 'api-keys' && (
+          <div className="bg-bg-secondary rounded-lg p-6">
+            <APIKeySettings />
+          </div>
+        )}
       </div>
     </div>
   )
