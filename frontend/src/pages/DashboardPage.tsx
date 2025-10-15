@@ -3,6 +3,7 @@ import { useAuthStore } from '../store/authStore'
 import CurrentTaskCard from '../components/CurrentTaskCard'
 import QuickStartGrid from '../components/QuickStartGrid'
 import TaskHistory from '../components/TaskHistory'
+import TodaysSummary from '../components/TodaysSummary'
 
 export default function DashboardPage() {
   const { logout } = useAuthStore()
@@ -19,6 +20,12 @@ export default function DashboardPage() {
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-4xl font-bold text-accent">MAGUS</h1>
           <div className="flex items-center space-x-4">
+            <Link
+              to="/analytics"
+              className="px-4 py-2 bg-accent text-white rounded hover:bg-opacity-90"
+            >
+              Analytics
+            </Link>
             <Link
               to="/settings"
               className="px-4 py-2 bg-gray-600 text-white rounded hover:bg-opacity-90"
@@ -39,6 +46,9 @@ export default function DashboardPage() {
 
         {/* Quick Start Grid */}
         <QuickStartGrid />
+
+        {/* Today's Summary */}
+        <TodaysSummary />
 
         {/* Task History */}
         <TaskHistory />
