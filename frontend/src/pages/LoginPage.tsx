@@ -4,7 +4,7 @@ import { useAuthStore } from '../store/authStore'
 
 export default function LoginPage() {
   const navigate = useNavigate()
-  const { login, isLoading } = useAuthStore()
+  const { login, isLoading, error } = useAuthStore()
   
   const [formData, setFormData] = useState({
     username: '',

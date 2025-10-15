@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { Link } from 'react-router-dom'
 import { BarChart, Bar, PieChart, Pie, Cell, ResponsiveContainer, XAxis, YAxis, Tooltip } from 'recharts'
-import { analyticsAPI } from '../api/analytics'
+import { analyticsAPI, TaskTypeSummary } from '../api/analytics'
 
 type ViewMode = 'today' | 'week' | 'month'
 
@@ -31,7 +31,7 @@ export default function AnalyticsPage() {
   const currentData = viewMode === 'today' ? todayData : viewMode === 'week' ? weekData : monthData
 
   // Prepare chart data
-  const chartData = currentData?.task_types?.map((tt) => ({
+  const chartData = currentData?.task_types?.map((tt: TaskTypeSummary) => ({
     name: tt.task_type_name,
     value: tt.total_duration / 3600, // Convert to hours
     duration: tt.duration_formatted,
@@ -151,9 +151,9 @@ export default function AnalyticsPage() {
                     cx="50%"
                     cy="50%"
                     outerRadius={100}
-                    label={(entry) => `${entry.emoji} ${entry.name}`}
+                    label={(entry: { emoji: string; name: string }) => `${entry.emoji} ${entry.name}`}
                   >
-                    {chartData.map((entry, index) => (
+                    {chartData.map((entry: { color: string }, index: number) => (
                       <Cell key={`cell-${index}`} fill={entry.color} />
                     ))}
                   </Pie>
@@ -182,7 +182,7 @@ export default function AnalyticsPage() {
           <div className="bg-bg-secondary rounded-lg p-6 mt-6">
             <h3 className="text-lg font-bold text-text-primary mb-4">Detailed Breakdown</h3>
             <div className="space-y-2">
-              {currentData?.task_types?.map((taskType) => (
+              {currentData?.task_types?.map((taskType: TaskTypeSummary) => (
                 <div
                   key={taskType.task_type_id}
                   className="flex items-center justify-between p-3 bg-bg-tertiary rounded"

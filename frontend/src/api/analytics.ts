@@ -29,7 +29,7 @@ export interface WeeklyBreakdown {
   start_date: string
   end_date: string
   daily_data: DailyData[]
-  task_type_summary: TaskTypeSummary[]
+  task_types: TaskTypeSummary[]
   total_tracked: number
   total_tracked_formatted: string
 }
