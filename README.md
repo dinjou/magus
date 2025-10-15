@@ -4,7 +4,6 @@
 
 [![Version](https://img.shields.io/badge/version-2.0.0--beta-blue.svg)](https://github.com/yourusername/magus)
 [![Docker](https://img.shields.io/badge/docker-ready-brightgreen.svg)](https://www.docker.com/)
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.12-blue.svg)](https://www.python.org/)
 [![Django](https://img.shields.io/badge/django-5.0.7-green.svg)](https://www.djangoproject.com/)
 [![React](https://img.shields.io/badge/react-18.3-61DAFB.svg)](https://reactjs.org/)
