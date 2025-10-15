@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Navigate } from 'react-router-dom'
 import { useAuthStore } from '../store/authStore'
 
@@ -7,13 +7,19 @@ interface ProtectedRouteProps {
 }
 
 export default function ProtectedRoute({ children }: ProtectedRouteProps) {
-  const { isAuthenticated, isLoading, checkAuth } = useAuthStore()
+  const { isAuthenticated, checkAuth } = useAuthStore()
+  const [isChecking, setIsChecking] = useState(true)
 
   useEffect(() => {
-    checkAuth()
+    const verify = async () => {
+      await checkAuth()
+      setIsChecking(false)
+    }
+    verify()
   }, [checkAuth])
 
-  if (isLoading) {
+  // Show loading while checking auth
+  if (isChecking) {
     return (
       <div className="min-h-screen bg-bg-primary flex items-center justify-center">
         <div className="text-accent text-xl">Loading...</div>
@@ -21,6 +27,7 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
     )
   }
 
+  // Redirect to login if not authenticated
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />
   }

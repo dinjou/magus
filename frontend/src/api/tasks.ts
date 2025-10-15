@@ -29,6 +29,7 @@ export const tasksAPI = {
     task_type?: number
   }): Promise<Task[]> => {
     const response = await apiClient.get('/tasks/', { params })
+    // Handle paginated response from DRF
     return response.data.results || response.data
   },
 

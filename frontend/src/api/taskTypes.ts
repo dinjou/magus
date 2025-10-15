@@ -25,7 +25,8 @@ export const taskTypesAPI = {
   list: async (showArchived: boolean = false): Promise<TaskType[]> => {
     const params = showArchived ? '?show_archived=true' : ''
     const response = await apiClient.get(`/task-types/${params}`)
-    return response.data
+    // Handle paginated response from DRF
+    return response.data.results || response.data
   },
 
   // Get single task type
