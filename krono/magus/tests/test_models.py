@@ -3,7 +3,7 @@ Basic model tests for MAGUS
 """
 import pytest
 from django.contrib.auth.models import User
-from magus.models import Profile, TaskType, Task, APIKey
+from magus.models import TaskType, Task, APIKey
 
 
 @pytest.mark.django_db

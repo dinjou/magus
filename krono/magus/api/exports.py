@@ -1,7 +1,6 @@
 import csv
 import io
 from datetime import datetime
-from django.core.mail import EmailMessage
 from django.utils import timezone
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated

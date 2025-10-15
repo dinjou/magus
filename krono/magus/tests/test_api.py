@@ -26,7 +26,7 @@ class TestAuthAPI:
     
     def test_user_login(self):
         """Test user can login and receive JWT token"""
-        user = User.objects.create_user(username='testuser', password='testpass123')
+        User.objects.create_user(username='testuser', password='testpass123')
         
         client = APIClient()
         response = client.post('/api/auth/login/', {

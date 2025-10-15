@@ -1,5 +1,5 @@
-from django.db.models import Sum, Count, Q, F
-from django.db.models.functions import TruncDate, TruncHour
+from django.db.models import Sum, F
+from django.db.models.functions import TruncDate
 from django.utils import timezone
 from datetime import timedelta, datetime
 from rest_framework.decorators import api_view, permission_classes
@@ -7,7 +7,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from drf_spectacular.utils import extend_schema, OpenApiResponse, OpenApiParameter
 
-from magus.models import Task, TaskType
+from magus.models import Task
 
 
 @extend_schema(
