@@ -2,7 +2,7 @@
 
 
 
-[![Version](https://img.shields.io/badge/version-2.0.0--beta-blue.svg)](https://github.com/yourusername/magus)
+[![Version](https://img.shields.io/badge/version-2.0.0--beta-blue.svg)](https://github.com/dinjou/magus)
 [![Docker](https://img.shields.io/badge/docker-ready-brightgreen.svg)](https://www.docker.com/)
 [![Python](https://img.shields.io/badge/python-3.12-blue.svg)](https://www.python.org/)
 [![Django](https://img.shields.io/badge/django-5.0.7-green.svg)](https://www.djangoproject.com/)
@@ -137,7 +137,7 @@ GDPR-compliant data export and deletion built in, because even if it's just for 
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/yourusername/magus.git
+git clone https://github.com/dinjou/magus.git
 cd magus
 
 # 2. Create environment file
