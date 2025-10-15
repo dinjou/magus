@@ -100,7 +100,7 @@ WSGI_APPLICATION = 'krono.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    'default': env.db('DATABASE_URL', default='postgresql://magus_user:changeme_dev@db:5432/magus')
+    'default': env.db('DATABASE_URL')
 }
 
 
