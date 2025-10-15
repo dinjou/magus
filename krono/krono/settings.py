@@ -263,14 +263,50 @@ SIMPLE_JWT = {
 
 CORS_ALLOWED_ORIGINS = env.list(
     'CORS_ALLOWED_ORIGINS',
-    default=['http://localhost:3000', 'http://localhost:5173']
+    default=['http://localhost:3000', 'http://localhost:5173', 'http://localhost:80', 'http://localhost']
 )
 
 CORS_ALLOW_CREDENTIALS = True
 
+# Allow all headers for API requests
+CORS_ALLOW_ALL_HEADERS = True
+
+# Allow common headers
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+]
+
+# Allow all methods for API requests
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
+
+# Preflight cache time
+CORS_PREFLIGHT_MAX_AGE = 86400
+
+# Additional CORS settings for API
+CORS_EXPOSE_HEADERS = [
+    'Content-Type',
+    'X-CSRFToken',
+    'Authorization',
+]
+
 CSRF_TRUSTED_ORIGINS = env.list(
     'CSRF_TRUSTED_ORIGINS',
-    default=['http://localhost:3000', 'http://localhost:5173']
+    default=['http://localhost:3000', 'http://localhost:5173', 'http://localhost:80', 'http://localhost']
 )
 
 # ==============================================================================
