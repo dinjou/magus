@@ -26,9 +26,9 @@ I needed a way to quantify my experience. To see how I actually spend my time, n
 
 Funny thing is, I'd already built the bones of exactly what I needed. It was just dressed up as a corporate tool.
 
-So I sat down with Cursor AI and rebuilt MAGUS from the ground up. What you're looking at now is the result of a single 15-hour session where we transformed a corporate time-tracker into a personal life analytics platform. One that I actually *want* to use every day.
+So I sat down with Cursor AI and rebuilt MAGUS from the ground up. What you're looking at now is the result of a single 4-hour session where we transformed my (admittedly prety weak) corporate time-tracker into a personal life analytics platform. One that I actually *want* to use every day.
 
-This isn't about productivity theater. **This is about understanding yourself.**
+This isn't about productivity theater. **This is about me understanding myself.**
 
 ---
 
@@ -428,10 +428,9 @@ The icon stays, though. Nostalgia.
 
 ## Known Issues
 
-- Email exports print to console in dev mode (configure SMTP for production)
+- Email exports print to console in dev mode (configure SMTP for production). Or maybe it doesn't. I didn't really test it because I didn't want to spend any more time getting an SNMP server up and running tonight.
 - Health checks show "unhealthy" due to missing requests module in container (doesn't affect functionality)
 - Analytics Week/Month views require completed (stopped) tasks to show data
-- PWA features not yet implemented (Sprint 8-9)
 
 ---
 
@@ -452,9 +451,11 @@ Built in one session. No breaks. Pure flow state.
 
 ## License
 
-MIT License - See LICENSE file
+No license is provided for this code.
 
-Use it, modify it, deploy it, whatever. Just don't turn it into corporate surveillance software. That's literally the opposite of the point.
+This is meant to be for personal betterment, but I woluld like to show it off as a portfolio piece while still retaining some ownership of my code and not have it get commercialized by another party that doesn't care about such a goal. 
+
+If you get benefit from my tool though, please let me know. I uh... I didn't realize how quickly I would rack up API fees from Cursor. (^w^) Your thanks would mean a lot.
 
 ---
 

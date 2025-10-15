@@ -326,18 +326,18 @@ export default function SettingsPage() {
                     </div>
                   </div>
 
-                  <div className="flex items-center space-x-2">
+                  <div className="flex items-center gap-2 flex-wrap">
                     {!taskType.is_archived ? (
                       <>
                         <button
                           onClick={() => togglePinMutation.mutate(taskType.id)}
-                          className="px-3 py-1 text-sm bg-accent text-white rounded hover:bg-opacity-90"
+                          className="px-2 sm:px-3 py-1 text-xs sm:text-sm bg-accent text-white rounded hover:bg-opacity-90 whitespace-nowrap"
                         >
                           {taskType.is_pinned ? 'Unpin' : 'Pin'}
                         </button>
                         <button
                           onClick={() => startEdit(taskType)}
-                          className="px-3 py-1 text-sm bg-gray-600 text-white rounded hover:bg-opacity-90"
+                          className="px-2 sm:px-3 py-1 text-xs sm:text-sm bg-gray-600 text-white rounded hover:bg-opacity-90 whitespace-nowrap"
                         >
                           Edit
                         </button>
@@ -347,7 +347,7 @@ export default function SettingsPage() {
                               archiveMutation.mutate(taskType.id)
                             }
                           }}
-                          className="px-3 py-1 text-sm bg-error text-white rounded hover:bg-opacity-90"
+                          className="px-2 sm:px-3 py-1 text-xs sm:text-sm bg-error text-white rounded hover:bg-opacity-90 whitespace-nowrap"
                         >
                           Archive
                         </button>
@@ -359,7 +359,7 @@ export default function SettingsPage() {
                             unarchiveMutation.mutate(taskType.id)
                           }
                         }}
-                        className="px-3 py-1 text-sm bg-success text-white rounded hover:bg-opacity-90"
+                        className="px-2 sm:px-3 py-1 text-xs sm:text-sm bg-success text-white rounded hover:bg-opacity-90 whitespace-nowrap"
                       >
                         Unarchive
                       </button>
