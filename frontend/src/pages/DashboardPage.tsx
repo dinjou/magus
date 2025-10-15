@@ -5,7 +5,7 @@ import QuickStartGrid from '../components/QuickStartGrid'
 import TaskHistory from '../components/TaskHistory'
 
 export default function DashboardPage() {
-  const { user, logout } = useAuthStore()
+  const { logout } = useAuthStore()
 
   const handleLogout = async () => {
     await logout()

@@ -1,22 +1,5 @@
-# Multi-stage Dockerfile for MAGUS
-# Stage 1: Frontend build
-FROM node:20-alpine AS frontend-builder
-
-WORKDIR /app/frontend
-
-# Copy frontend package files
-COPY frontend/package*.json ./
-
-# Install dependencies
-RUN npm ci --only=production
-
-# Copy frontend source
-COPY frontend/ ./
-
-# Build React app
-RUN npm run build
-
-# Stage 2: Python backend
+# Dockerfile for MAGUS
+# Note: Frontend is built separately and served by Vite dev server or Nginx in production
 FROM python:3.12-slim
 
 # Set environment variables
@@ -51,11 +34,8 @@ RUN pip install --no-cache-dir -r requirements.txt && \
 # Copy application code
 COPY --chown=magus:magus krono/ ./krono/
 
-# Copy frontend build from previous stage
-COPY --from=frontend-builder --chown=magus:magus /app/frontend/dist ./krono/staticfiles/
-
 # Create necessary directories
-RUN mkdir -p /app/krono/media /app/krono/logs && \
+RUN mkdir -p /app/krono/media /app/krono/logs /app/krono/staticfiles && \
     chown -R magus:magus /app
 
 # Switch to non-root user
@@ -63,7 +43,6 @@ USER magus
 
 # Collect static files
 WORKDIR /app/krono
-RUN python manage.py collectstatic --noinput || true
 
 # Expose port
 EXPOSE 8000

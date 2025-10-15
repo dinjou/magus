@@ -48,8 +48,7 @@ services:
       dockerfile: Dockerfile
     container_name: magus_web
     command: >
-      sh -c "python manage.py migrate &&
-             python manage.py collectstatic --noinput &&
+      sh -c "python manage.py migrate --noinput &&
              gunicorn krono.wsgi:application --bind 0.0.0.0:8000 --workers 4 --timeout 120 --access-logfile - --error-logfile -"
     volumes:
       - ./krono:/app/krono

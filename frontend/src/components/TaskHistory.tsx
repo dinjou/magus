@@ -1,8 +1,7 @@
 import { useState } from 'react'
-import { useQuery, useMutation, useQueryClient } from '@tantml:function_calls>
-<invoke name="tasks">
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { tasksAPI, Task } from '../api/tasks'
-import { formatDistance, formatDuration, intervalToDuration } from 'date-fns'
+import { intervalToDuration } from 'date-fns'
 
 export default function TaskHistory() {
   const queryClient = useQueryClient()
