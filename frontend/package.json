@@ -25,7 +25,8 @@
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.28.0",
     "recharts": "^2.14.1",
-    "zustand": "^5.0.2"
+    "zustand": "^5.0.2",
+    "zustand-persist": "^0.4.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.6.3",

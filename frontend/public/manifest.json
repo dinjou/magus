@@ -1,0 +1,32 @@
+{
+  "name": "MAGUS - Time Tracking",
+  "short_name": "MAGUS",
+  "description": "Personal time tracking and life analytics platform",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#2C2F33",
+  "theme_color": "#7289DA",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["productivity", "utilities"],
+  "screenshots": []
+}
+
