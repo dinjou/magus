@@ -20,20 +20,15 @@ I built the first version of MAGUS over a weekend a few months back because my t
 
 That first version worked. It solved the problem. But it was never meant to last.
 
-Fast forward to October 2025: I realized I didn't need a corporate time-tracking tool. **I needed to understand how I spend my life.** Not for a boss, not for a report, but for *me*. I needed self-analysis without the pain. I needed data-gathering that didn't feel like work.
+Fast forward to October 2025: I realized something. I struggle with feeling like I never have time for anything. Every task feels overwhelming before I even start. Everything seems to take forever, and I can never tell if I'm actually making progress or just spinning my wheels.
 
-So I sat down with Cursor AI and rebuilt MAGUS from the ground up. What you're looking at now is the result of a single 15-hour session where we:
+I needed a way to quantify my experience. To see how I actually spend my time, not how I *feel* like I spend it. To match my perception with reality. Numbers don't lie, and I figured if I could see patterns in my own time usage, maybe I could stop feeling so overwhelmed.
 
-- Ripped out the Electron wrapper and went full PWA
-- Added a modern React + TypeScript frontend
-- Built a proper REST API with DRF
-- Containerized everything with Docker
-- Made it beautiful, fast, and actually enjoyable to use
-- Added analytics so I could see patterns in my time
-- Built in automation via API keys
-- Made it extensible without being bloated
+Funny thing is, I'd already built the bones of exactly what I needed. It was just dressed up as a corporate tool.
 
-This isn't a quick-and-dirty fix anymore. **This is a tool I actually want to use every day.**
+So I sat down with Cursor AI and rebuilt MAGUS from the ground up. What you're looking at now is the result of a single 15-hour session where we transformed a corporate time-tracker into a personal life analytics platform. One that I actually *want* to use every day.
+
+This isn't about productivity theater. **This is about understanding yourself.**
 
 ---
 
@@ -400,81 +395,15 @@ This is primarily a personal project, but I'm open to:
 
 ---
 
-## Roadmap
-
-### v2.1 (In Progress)
-- [ ] PWA features (offline support, install to home screen)
-- [ ] Smooth animations and transitions
-- [ ] Mobile gesture support (long-press, swipe)
-- [ ] iOS Live Activities integration
-
-### v2.x (Future)
-- [ ] Retro OS themes (Aqua, Aero, Metro, Luna)
-- [ ] AI insights with user-provided OpenAI keys
-- [ ] Advanced analytics (heatmaps, trends)
-- [ ] Native iOS app for true WatchOS integration
-- [ ] Webhook support for automation
-
-### Won't Build
-- Team features (use v1.0 if you need that)
-- Manager dashboards
-- Approval workflows
-- Surveillance features
-
----
-
 ## Why "MAGUS"?
 
-Originally called "gaebolg" (after the cursed spear from Irish mythology - seemed fitting for a tool that tracks every minute of your workday). 
+The project name is a Chrono Trigger reference - because time is the theme here, and the name felt right.
 
-Renamed to MAGUS because:
-1. It's easier to pronounce
-2. Mages are wise and understand things
-3. Understanding how you spend your time is kind of magical
-4. I like the acronym potential (Multi-user Analytics & Granular Usage System)
+Originally called "gaebolg" after the cursed spear from Irish mythology. It was meant to be a "tip of the spear" application - something to pry the door open, to get basic insight into how time was being used so we could take meaningful action.
+
+Renamed to MAGUS because it's easier to pronounce and the Chrono Trigger connection was too good to pass up.
 
 The icon stays, though. Nostalgia.
-
----
-
-## Technical Notes
-
-### Why Docker?
-
-Because I don't want to spend hours setting up environments. `docker-compose up` and you're done. Deploy anywhere. Scale however. Delete and rebuild in seconds.
-
-Plus it makes this genuinely portable. Run it on your home server, a VPS, a Raspberry Pi, whatever. If it runs Docker, it runs MAGUS.
-
-### Why React + TypeScript?
-
-The original was server-side rendered Django templates. They worked, but let's be real - a time tracking app benefits from real-time updates, smooth interactions, and offline capability. React with TypeScript gives us type safety, a massive ecosystem, and the foundation for PWA features.
-
-Plus Vite is stupid fast for development.
-
-### Why PostgreSQL over SQLite?
-
-Multi-user support from day one. Even though I built this for personal use, I wanted the architecture to support my original team use case if needed. PostgreSQL is production-ready, has excellent Django support, and scales forever.
-
-### Why Self-Hosted?
-
-Your time data is *your* data. I don't want it on someone else's server. I don't want it analyzed for ad targeting. I don't want it subject to ToS changes or company pivots.
-
-Self-hosted means you control everything. The code is open. The data is yours. The infrastructure is yours.
-
----
-
-## Performance
-
-- **Initial Load:** < 2 seconds
-- **API Response:** < 100ms (p95)
-- **Live Timer Updates:** Every second, smooth
-- **Offline Support:** Coming in v2.1
-- **Bundle Size:** < 300KB gzipped
-
-Tested on:
-- Desktop Chrome, Firefox, Safari
-- iPhone 14 Pro (Safari)
-- Android (Chrome)
 
 ---
 
@@ -496,33 +425,6 @@ Tested on:
 - No third-party analytics
 - Optional OpenAI integration (you provide your own key)
 - GDPR-compliant data export and deletion
-
----
-
-## Architecture Decisions
-
-### Why Not Native Mobile?
-
-I considered it. iOS app with WatchOS complications would be sick. But:
-
-1. **PWA gets you 90% there** - Install to home screen, works offline, fast
-2. **One codebase** - Desktop + mobile from the same code
-3. **No App Store bullshit** - Update whenever, no approval process
-4. **API-first means native later** - Can always build native apps that talk to this API
-
-PWA now, native if WatchOS becomes critical.
-
-### Why Celery?
-
-Background tasks for exports, email sending, and future scheduled jobs. Could've used Django-Q or Dramatiq, but Celery is battle-tested and has great docs.
-
-Also, it was already there from v1.0 and it wasn't causing problems.
-
-### Why TanStack Query?
-
-Server state management that actually makes sense. Automatic caching, refetching, and synchronization. The live timer updates and analytics refresh are trivial with Query's built-in intervals.
-
----
 
 ## Known Issues
 

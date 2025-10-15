@@ -1,14 +1,12 @@
 import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { Link } from 'react-router-dom'
-import { BarChart, Bar, PieChart, Pie, Cell, ResponsiveContainer, XAxis, YAxis, Tooltip, Legend } from 'recharts'
+import { BarChart, Bar, PieChart, Pie, Cell, ResponsiveContainer, XAxis, YAxis, Tooltip } from 'recharts'
 import { analyticsAPI } from '../api/analytics'
-import { useAuthStore } from '../store/authStore'
 
 type ViewMode = 'today' | 'week' | 'month'
 
 export default function AnalyticsPage() {
-  const { logout } = useAuthStore()
   const [viewMode, setViewMode] = useState<ViewMode>('today')
 
   // Fetch data based on view mode
@@ -32,11 +30,6 @@ export default function AnalyticsPage() {
 
   const currentData = viewMode === 'today' ? todayData : viewMode === 'week' ? weekData : monthData
 
-  const handleLogout = async () => {
-    await logout()
-    window.location.href = '/login'
-  }
-
   // Prepare chart data
   const chartData = currentData?.task_types?.map((tt: any) => ({
     name: tt.task_type_name,
@@ -50,27 +43,24 @@ export default function AnalyticsPage() {
     <div className="min-h-screen bg-bg-primary">
       <div className="container mx-auto px-4 py-8 max-w-6xl">
         {/* Header */}
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-4xl font-bold text-accent">Analytics</h1>
-          <div className="flex items-center space-x-4">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+          <Link to="/dashboard" className="flex items-center space-x-3 no-underline hover:opacity-80 transition-opacity">
+            <img src="/favicon.ico" alt="MAGUS" className="w-8 h-8" />
+            <h1 className="text-4xl font-bold text-accent">Analytics</h1>
+          </Link>
+          <div className="flex items-center gap-2 flex-wrap">
             <Link
               to="/dashboard"
-              className="px-4 py-2 bg-gray-600 text-white rounded hover:bg-opacity-90"
+              className="px-4 py-2 bg-gray-600 text-white rounded hover:bg-opacity-90 text-sm sm:text-base whitespace-nowrap"
             >
               Dashboard
             </Link>
             <Link
               to="/settings"
-              className="px-4 py-2 bg-gray-600 text-white rounded hover:bg-opacity-90"
+              className="px-4 py-2 bg-gray-600 text-white rounded hover:bg-opacity-90 text-sm sm:text-base whitespace-nowrap"
             >
               Settings
             </Link>
-            <button
-              onClick={handleLogout}
-              className="px-4 py-2 bg-error text-white rounded hover:bg-opacity-90"
-            >
-              Logout
-            </button>
           </div>
         </div>
 
