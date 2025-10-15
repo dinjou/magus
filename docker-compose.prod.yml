@@ -1,7 +1,5 @@
-version: '3.9'
-
 # Production Docker Compose Configuration
-# Usage: docker-compose -f docker-compose.prod.yml up -d
+# Usage: docker compose -f docker-compose.prod.yml up -d
 
 services:
   # PostgreSQL Database
@@ -54,13 +52,12 @@ services:
       dockerfile: Dockerfile
     container_name: magus_web_prod
     command: >
-      sh -c "python manage.py migrate &&
+      sh -c "python manage.py migrate --noinput &&
              python manage.py collectstatic --noinput &&
-             gunicorn krono.wsgi:application --bind 0.0.0.0:8000 --workers 4 --threads 4 --timeout 120 --access-logfile /app/krono/logs/access.log --error-logfile /app/krono/logs/error.log"
+             gunicorn krono.wsgi:application --bind 0.0.0.0:8000 --workers 4 --threads 4 --timeout 120 --access-logfile - --error-logfile -"
     volumes:
       - static_files:/app/krono/staticfiles
       - media_files:/app/krono/media
-      - ./logs:/app/krono/logs
     environment:
       - DEBUG=False
       - SECRET_KEY=${SECRET_KEY}
@@ -78,6 +75,8 @@ services:
       - EMAIL_HOST_USER=${EMAIL_HOST_USER}
       - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD}
       - DEFAULT_FROM_EMAIL=${DEFAULT_FROM_EMAIL:-noreply@magus.local}
+    ports:
+      - "8000:8000"
     depends_on:
       db:
         condition: service_healthy
@@ -96,7 +95,6 @@ services:
     command: celery -A krono worker --loglevel=info --concurrency=4
     volumes:
       - media_files:/app/krono/media
-      - ./logs:/app/krono/logs
     environment:
       - DEBUG=False
       - SECRET_KEY=${SECRET_KEY}
@@ -127,8 +125,6 @@ services:
       dockerfile: Dockerfile
     container_name: magus_celery_beat_prod
     command: celery -A krono beat --loglevel=info --scheduler django_celery_beat.schedulers:DatabaseScheduler
-    volumes:
-      - ./logs:/app/krono/logs
     environment:
       - DEBUG=False
       - SECRET_KEY=${SECRET_KEY}
