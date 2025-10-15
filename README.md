@@ -124,7 +124,42 @@ GDPR-compliant data export and deletion built in, because even if it's just for 
 
 ---
 
-## Quick Start
+## Quick Start (Production-Ready)
+
+**One command to rule them all:**
+
+```bash
+./scripts/start.sh
+```
+
+This will:
+- Auto-generate secure passwords for internal services
+- Create a `.env` file if it doesn't exist
+- Start all services with Docker Compose
+
+### Manual Setup
+
+If you prefer manual control:
+
+```bash
+# 1. Generate secrets (or create .env manually)
+./scripts/generate-secrets.sh
+
+# 2. Edit .env and update ALLOWED_HOSTS for your domain
+nano .env
+
+# 3. Start services
+docker compose up -d
+```
+
+### Access Points
+
+- **Frontend:** http://localhost:5173
+- **Backend API:** http://localhost:8000/api/
+- **Django Admin:** http://localhost:8000/admin/
+- **API Docs:** http://localhost:8000/api/docs/
+
+## Quick Start (Development)
 
 ### Prerequisites
 
