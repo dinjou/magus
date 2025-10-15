@@ -12,6 +12,78 @@ This document breaks down the MAGUS modernization into actionable sprints with s
 
 ---
 
+## Testing Milestones
+
+Testing should be integrated throughout development at key checkpoints:
+
+### 🔴 Testing Point 0: Infrastructure Validation (After Sprint 0)
+**Setup Time:** 15-20 minutes  
+**What to Test:**
+- Docker containers start successfully
+- Database migrations apply
+- Health check endpoint responds
+- Frontend dev server runs
+- API documentation accessible
+
+**Testing Viability:** Infrastructure only - no functional features yet
+
+### 🟡 Testing Point 1: Authentication System (After Sprint 1)
+**What to Test:**
+- User registration with validation
+- Login/logout flow
+- Protected routes redirect properly
+- Token refresh works
+- Profile viewing
+
+**Testing Viability:** Auth works, but no time-tracking functionality
+
+### 🟢 Testing Point 2: Core MVP (After Sprint 3) ⭐ **FIRST REAL USER TESTING**
+**What to Test:**
+- Create custom task types
+- Pin/unpin task types
+- Start tracking a task
+- Stop tracking a task
+- View currently tracking task
+- See task history
+- Edit task entries manually
+- Archive task types
+
+**Testing Viability:** Core functionality usable - can actually track time!
+
+### 🟢 Testing Point 3: Analytics & Insights (After Sprint 4) ⭐ **RECOMMENDED**
+**What to Test:**
+- View today's summary
+- See daily/weekly/monthly breakdowns
+- Charts render correctly
+- Time views switch properly
+- Statistics are accurate
+- Dashboard at-a-glance
+
+**Testing Viability:** Full user experience - track time AND understand it
+
+### 🔵 Testing Point 4: Export & Automation (After Sprint 7) ⭐ **COMPLETE MVP**
+**What to Test:**
+- CSV export via email
+- Scheduled exports
+- API key generation
+- API endpoint authentication
+- Automated task tracking via API
+
+**Testing Viability:** Production-ready MVP with all core features
+
+### 🎨 Testing Point 5: Polish & PWA (After Sprint 9)
+**What to Test:**
+- Theme switching
+- PWA installation
+- Offline functionality
+- Animations and transitions
+- Mobile gestures
+- Accessibility
+
+**Testing Viability:** Fully polished application
+
+---
+
 ## Sprint 0: Project Setup & Infrastructure (8-10 hours) [P0]
 
 **Goal:** Set up the development environment, Docker infrastructure, and baseline project structure.
@@ -197,6 +269,72 @@ This document breaks down the MAGUS modernization into actionable sprints with s
 - Auto-refresh tokens before expiry
 - Logout clears tokens and redirects
 - Forms are responsive and accessible
+
+---
+
+### 🧪 Testing Point 1: Authentication System Validation
+
+**When:** After completing Sprint 1  
+**Time Required:** 15-20 minutes  
+**Setup Steps:**
+```bash
+# Create migrations
+cd krono
+python manage.py makemigrations
+
+# Start Docker containers
+cd ..
+docker-compose up -d
+
+# Apply migrations
+docker-compose exec web python manage.py migrate
+
+# Create superuser (optional for admin access)
+docker-compose exec web python manage.py createsuperuser
+
+# Start frontend
+cd frontend
+npm run dev
+```
+
+**Test Scenarios:**
+1. **Registration Flow**
+   - Navigate to http://localhost:5173/register
+   - Register new user with valid data
+   - Verify redirected to dashboard
+   - Check localStorage for tokens
+
+2. **Login Flow**
+   - Logout from dashboard
+   - Navigate to http://localhost:5173/login
+   - Login with credentials
+   - Verify redirected to dashboard
+
+3. **Protected Routes**
+   - Logout
+   - Try accessing http://localhost:5173/dashboard
+   - Verify redirected to login
+
+4. **Token Refresh**
+   - Login and wait 15+ minutes
+   - Perform action that requires auth
+   - Verify token auto-refreshes (check Network tab)
+
+5. **API Documentation**
+   - Visit http://localhost:8000/api/docs/
+   - Verify Swagger UI loads
+   - Test auth endpoints from Swagger
+
+**Expected Issues:**
+- CORS errors if .env not set up correctly
+- 404s if migrations not applied
+- Token errors if SECRET_KEY changed
+
+**Success Criteria:**
+- ✅ Can register and login
+- ✅ Protected routes work
+- ✅ Tokens stored and refreshed
+- ✅ API docs accessible
 
 ---
 
@@ -402,6 +540,83 @@ This document breaks down the MAGUS modernization into actionable sprints with s
 - Tapping task starts it (with interrupt logic)
 - Scrollable if many tasks
 - Closes after starting a task
+
+---
+
+### 🧪 Testing Point 2: Core MVP - First Real User Testing ⭐
+
+**When:** After completing Sprint 3  
+**Time Required:** 30-60 minutes  
+**Prerequisites:** Docker running, migrations applied, user registered
+
+**Critical Test Scenarios:**
+
+1. **Task Type Management**
+   - Create a new custom task type
+   - Edit emoji, color, name
+   - Pin/unpin task types
+   - Archive a task type
+   - Verify archived tasks don't show in quick grid
+   - Reorder task types
+
+2. **Time Tracking Flow**
+   - Start tracking a pinned task
+   - Verify timer starts and displays
+   - Verify "Stop" button appears
+   - Stop the task
+   - Verify task saved in history
+
+3. **Task Interruption**
+   - Start tracking task A
+   - While tracking, tap to start task B
+   - Verify interrupt confirmation appears
+   - Confirm interruption
+   - Verify task A marked as interrupted
+   - Verify task B now tracking
+
+4. **Task History**
+   - View task history
+   - Verify all tracked tasks appear
+   - Check timestamps are correct
+   - Verify interrupted flag shows
+
+5. **Manual Entry Editing**
+   - Open a completed task
+   - Edit start/end times
+   - Change task type
+   - Add notes
+   - Save changes
+   - Verify edits persist
+
+6. **Quick Start Grid**
+   - Verify only pinned tasks show
+   - Test horizontal scrolling
+   - Verify tap-to-start works
+   - Test long-press to pin/unpin
+
+**Real-World Usage Test:**
+- Track 3-4 different tasks over 15-30 minutes
+- Edit one entry manually
+- Archive a task type
+- Create a new task type
+- Verify everything works end-to-end
+
+**Success Criteria:**
+- ✅ Can create/edit/archive task types
+- ✅ Can start/stop tracking seamlessly
+- ✅ Interrupt flow works correctly
+- ✅ Task history displays accurately
+- ✅ Manual edits persist
+- ✅ UI is responsive and intuitive
+
+**Known Limitations at This Point:**
+- No analytics or visualizations yet
+- No CSV export
+- No API keys
+- Basic UI (not polished)
+- No theming
+
+**Recommendation:** This is the minimum viable product! If this works well, you can actually start using it for real time tracking while development continues.
 
 ---
 
