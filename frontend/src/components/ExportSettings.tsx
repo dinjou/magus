@@ -19,14 +19,35 @@ export default function ExportSettings() {
     },
   })
 
-  const handleDownload = () => {
+  const handleDownload = async () => {
     const params = new URLSearchParams()
     if (startDate) params.append('start_date', startDate)
     if (endDate) params.append('end_date', endDate)
     const queryString = params.toString() ? `?${params.toString()}` : ''
     
-    // Open download in new tab
-    window.open(`http://localhost:8000/api/export/download/${queryString}`, '_blank')
+    try {
+      // Fetch with auth token
+      const response = await apiClient.get(`/export/download/${queryString}`, {
+        responseType: 'blob',
+      })
+      
+      // Create download link
+      const blob = new Blob([response.data], { type: 'text/csv' })
+      const url = window.URL.createObjectURL(blob)
+      const link = document.createElement('a')
+      link.href = url
+      link.download = `magus_export_${startDate || 'all'}_${endDate || 'all'}.csv`
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+      window.URL.revokeObjectURL(url)
+      
+      setSuccessMessage('CSV downloaded successfully!')
+      setTimeout(() => setSuccessMessage(''), 3000)
+    } catch (error) {
+      console.error('Download error:', error)
+      alert('Failed to download CSV. Please try again.')
+    }
   }
 
   const handleEmailExport = (e: React.FormEvent) => {
