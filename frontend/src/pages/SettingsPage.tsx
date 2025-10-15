@@ -60,6 +60,14 @@ export default function SettingsPage() {
     },
   })
 
+  // Unarchive mutation
+  const unarchiveMutation = useMutation({
+    mutationFn: taskTypesAPI.unarchive,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['taskTypes'] })
+    },
+  })
+
   const resetForm = () => {
     setFormData({
       name: '',
@@ -267,7 +275,7 @@ export default function SettingsPage() {
                   </div>
 
                   <div className="flex items-center space-x-2">
-                    {!taskType.is_archived && (
+                    {!taskType.is_archived ? (
                       <>
                         <button
                           onClick={() => togglePinMutation.mutate(taskType.id)}
@@ -292,6 +300,17 @@ export default function SettingsPage() {
                           Archive
                         </button>
                       </>
+                    ) : (
+                      <button
+                        onClick={() => {
+                          if (confirm(`Unarchive "${taskType.name}"?`)) {
+                            unarchiveMutation.mutate(taskType.id)
+                          }
+                        }}
+                        className="px-3 py-1 text-sm bg-success text-white rounded hover:bg-opacity-90"
+                      >
+                        Unarchive
+                      </button>
                     )}
                   </div>
                 </div>
