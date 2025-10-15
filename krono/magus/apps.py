@@ -4,4 +4,4 @@ class MagusConfig(AppConfig):
     name = 'magus'
 
     def ready(self):
-        import magus.signals
+        import magus.signals  # noqa: F401

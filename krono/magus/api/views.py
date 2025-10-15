@@ -1,12 +1,10 @@
-from rest_framework import generics, status, permissions
+from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
-from django.contrib.auth.models import User
 from drf_spectacular.utils import extend_schema, OpenApiResponse
 
-from magus.models import Profile
 from .serializers import (
     UserSerializer,
     RegisterSerializer,

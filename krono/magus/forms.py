@@ -1,8 +1,7 @@
 from django import forms
-from .models import Task
-from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from .models import Task
 
 class StartTaskForm(forms.ModelForm):
     class Meta:

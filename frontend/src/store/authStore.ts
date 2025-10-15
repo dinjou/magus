@@ -40,10 +40,10 @@ export const useAuthStore = create<AuthState>((set) => ({
       
       // Set user
       set({ user: response.user, isAuthenticated: true, isLoading: false })
-    } catch (error: any) {
-      const errorMessage = error.response?.data?.error || 'Login failed'
+    } catch (err) {
+      const errorMessage = (err as any).response?.data?.error || 'Login failed'
       set({ error: errorMessage, isLoading: false })
-      throw error
+      throw err
     }
   },
 
@@ -58,18 +58,18 @@ export const useAuthStore = create<AuthState>((set) => ({
       
       // Set user
       set({ user: response.user, isAuthenticated: true, isLoading: false })
-    } catch (error: any) {
-      const errorMessage = error.response?.data?.error || 'Registration failed'
+    } catch (err) {
+      const errorMessage = (err as any).response?.data?.error || 'Registration failed'
       set({ error: errorMessage, isLoading: false })
-      throw error
+      throw err
     }
   },
 
   logout: async () => {
     try {
       await authAPI.logout()
-    } catch (error) {
-      console.error('Logout error:', error)
+    } catch (err) {
+      console.error('Logout error:', err)
     } finally {
       // Clear tokens
       localStorage.removeItem('access_token')
@@ -91,7 +91,7 @@ export const useAuthStore = create<AuthState>((set) => ({
     try {
       const user = await authAPI.getCurrentUser()
       set({ user, isAuthenticated: true, isLoading: false })
-    } catch (error) {
+    } catch {
       // Token invalid, clear it
       localStorage.removeItem('access_token')
       localStorage.removeItem('refresh_token')

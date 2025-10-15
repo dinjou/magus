@@ -1,3 +1,2 @@
-from django.test import TestCase
+# Tests moved to magus/tests/ directory
 
-# Create your tests here.

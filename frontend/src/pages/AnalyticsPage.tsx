@@ -31,7 +31,7 @@ export default function AnalyticsPage() {
   const currentData = viewMode === 'today' ? todayData : viewMode === 'week' ? weekData : monthData
 
   // Prepare chart data
-  const chartData = currentData?.task_types?.map((tt: any) => ({
+  const chartData = currentData?.task_types?.map((tt) => ({
     name: tt.task_type_name,
     value: tt.total_duration / 3600, // Convert to hours
     duration: tt.duration_formatted,
@@ -182,7 +182,7 @@ export default function AnalyticsPage() {
           <div className="bg-bg-secondary rounded-lg p-6 mt-6">
             <h3 className="text-lg font-bold text-text-primary mb-4">Detailed Breakdown</h3>
             <div className="space-y-2">
-              {currentData?.task_types?.map((taskType: any) => (
+              {currentData?.task_types?.map((taskType) => (
                 <div
                   key={taskType.task_type_id}
                   className="flex items-center justify-between p-3 bg-bg-tertiary rounded"

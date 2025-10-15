@@ -4,7 +4,7 @@ import { useAuthStore } from '../store/authStore'
 
 export default function LoginPage() {
   const navigate = useNavigate()
-  const { login, isLoading, error } = useAuthStore()
+  const { login, isLoading } = useAuthStore()
   
   const [formData, setFormData] = useState({
     username: '',
@@ -16,7 +16,7 @@ export default function LoginPage() {
     try {
       await login(formData.username, formData.password)
       navigate('/dashboard')
-    } catch (error) {
+    } catch {
       // Error is handled in store
     }
   }

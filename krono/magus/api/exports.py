@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from drf_spectacular.utils import extend_schema, OpenApiResponse, OpenApiParameter
 
-from magus.models import Task, ScheduledExport
+from magus.models import Task
 from magus.tasks import send_csv_export_email
 
 

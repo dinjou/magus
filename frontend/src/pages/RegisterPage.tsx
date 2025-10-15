@@ -40,9 +40,9 @@ export default function RegisterPage() {
     try {
       await register(formData)
       navigate('/dashboard')
-    } catch (error: any) {
-      if (error.response?.data) {
-        setValidationErrors(error.response.data)
+    } catch (err) {
+      if ((err as any).response?.data) {
+        setValidationErrors((err as any).response.data)
       }
     }
   }
