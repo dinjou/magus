@@ -1,8 +1,15 @@
-from django.urls import path
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt.views import TokenRefreshView
 from . import views
+from .viewsets import TaskTypeViewSet, TaskViewSet
 
 app_name = 'api'
+
+# Create router and register viewsets
+router = DefaultRouter()
+router.register(r'task-types', TaskTypeViewSet, basename='tasktype')
+router.register(r'tasks', TaskViewSet, basename='task')
 
 urlpatterns = [
     # Authentication
@@ -16,5 +23,8 @@ urlpatterns = [
     path('profile/', views.profile_detail_view, name='profile_detail'),
     path('profile/update/', views.profile_update_view, name='profile_update'),
     path('profile/delete/', views.profile_delete_view, name='profile_delete'),
+    
+    # ViewSet routes (task-types, tasks)
+    path('', include(router.urls)),
 ]
 
