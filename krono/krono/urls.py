@@ -31,8 +31,8 @@ urlpatterns = [
     path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
     path('api/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
     
-    # API endpoints (will be created in Sprint 1+)
-    # path('api/', include('magus.api.urls')),
+    # API endpoints
+    path('api/', include('magus.api.urls')),
     
     # Legacy magus URLs (will be deprecated after migration)
     path('magus/', include('magus.urls')),

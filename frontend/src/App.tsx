@@ -1,5 +1,9 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import LoginPage from './pages/LoginPage'
+import RegisterPage from './pages/RegisterPage'
+import DashboardPage from './pages/DashboardPage'
+import ProtectedRoute from './components/ProtectedRoute'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -15,18 +19,25 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
-        <div className="min-h-screen bg-bg-primary text-text-primary">
-          <div className="container mx-auto px-4 py-8">
-            <h1 className="text-4xl font-bold text-accent mb-4">MAGUS</h1>
-            <p className="text-text-secondary">
-              Personal time tracking and life analytics platform
-            </p>
-            <p className="mt-4 text-success">✓ Frontend setup complete!</p>
-            <p className="text-text-secondary text-sm mt-2">
-              React + TypeScript + Vite + TailwindCSS + TanStack Query
-            </p>
-          </div>
-        </div>
+        <Routes>
+          {/* Public routes */}
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          
+          {/* Protected routes */}
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <DashboardPage />
+              </ProtectedRoute>
+            }
+          />
+          
+          {/* Default redirect */}
+          <Route path="/" element={<Navigate to="/dashboard" replace />} />
+          <Route path="*" element={<Navigate to="/dashboard" replace />} />
+        </Routes>
       </BrowserRouter>
     </QueryClientProvider>
   )
