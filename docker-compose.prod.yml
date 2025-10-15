@@ -141,6 +141,40 @@ services:
       - magus_network
     restart: always
 
+  # Frontend Builder (one-time build)
+  frontend-builder:
+    image: node:20-alpine
+    container_name: magus_frontend_builder
+    working_dir: /app
+    command: sh -c "npm ci --include=dev && npm run build"
+    volumes:
+      - ./frontend:/app
+      - frontend_dist:/app/dist
+    environment:
+      - VITE_API_URL=/api
+    networks:
+      - magus_network
+
+  # Frontend Server (nginx serving static files)
+  frontend:
+    image: nginx:alpine
+    container_name: magus_frontend_prod
+    volumes:
+      - frontend_dist:/usr/share/nginx/html:ro
+    ports:
+      - "5173:80"
+    depends_on:
+      frontend-builder:
+        condition: service_completed_successfully
+    networks:
+      - magus_network
+    restart: always
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
   # Nginx Reverse Proxy
   nginx:
     image: nginx:alpine
@@ -207,6 +241,8 @@ volumes:
   static_files:
     driver: local
   media_files:
+    driver: local
+  frontend_dist:
     driver: local
 
 networks:
