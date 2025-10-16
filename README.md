@@ -178,8 +178,11 @@ cd magus
 
 # 2. Run the interactive setup script
 bash scripts/setup.sh
+# or with sudo if you get permission errors: sudo bash scripts/setup.sh
 
 # The script will:
+# - Check for existing Docker volumes (from previous installs)
+# - Offer to remove old volumes to prevent credential mismatches
 # - Generate secure random passwords automatically
 # - Ask for your domain(s) or IP(s) for access
 # - Configure email (optional)
@@ -187,6 +190,7 @@ bash scripts/setup.sh
 
 # 3. Start MAGUS
 docker compose -f docker-compose.prod.yml up -d
+# or with sudo: sudo docker compose -f docker-compose.prod.yml up -d
 
 # 4. Wait for services to be ready (~30 seconds)
 docker compose -f docker-compose.prod.yml ps
@@ -423,16 +427,34 @@ gunzip < backup.sql.gz | \
 
 ## Troubleshooting
 
+### Database Authentication Errors
+
+If you see `password authentication failed for user "magus_user"`:
+
+```bash
+# This happens when Docker volumes from a previous install have different credentials
+
+# Solution: Remove old volumes and start fresh
+sudo docker compose -f docker-compose.prod.yml down
+sudo docker volume rm magus_postgres_data magus_redis_data
+sudo docker compose -f docker-compose.prod.yml up -d
+
+# The database will re-initialize with credentials from your current .env file
+```
+
+**Prevention:** The setup script now checks for existing volumes and offers to remove them automatically.
+
 ### Containers Won't Start
 
 ```bash
 # Check logs
-docker-compose logs -f
+docker compose -f docker-compose.prod.yml logs -f
 
 # Common issues:
 # - Port 80/443/5432/6379 already in use
 # - .env file missing or incorrect
 # - Not enough disk space
+# - Old Docker volumes with mismatched credentials (see above)
 ```
 
 ### Frontend Not Loading

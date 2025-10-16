@@ -40,6 +40,60 @@ if [ -f ".env" ]; then
     echo -e "${GREEN}✓${NC} Backed up existing .env"
 fi
 
+# Check for existing Docker volumes that could cause credential mismatches
+echo -e "\n${BLUE}Checking for existing Docker volumes...${NC}"
+
+# Try to check for volumes, handle permission errors gracefully
+DOCKER_CMD="docker"
+if ! docker volume ls &>/dev/null; then
+    if [ "$EUID" -ne 0 ]; then
+        echo -e "${YELLOW}⚠️  Need elevated permissions to check Docker volumes${NC}"
+        echo "   Run this script with sudo to enable volume cleanup"
+        DOCKER_CMD="sudo docker"
+    fi
+fi
+
+EXISTING_VOLUMES=$($DOCKER_CMD volume ls --format '{{.Name}}' 2>/dev/null | grep '^magus_' || true)
+
+if [ ! -z "$EXISTING_VOLUMES" ]; then
+    echo -e "${YELLOW}⚠️  Found existing MAGUS Docker volumes:${NC}"
+    echo "$EXISTING_VOLUMES" | sed 's/^/  - /'
+    echo
+    echo -e "${RED}WARNING:${NC} Existing database volumes may have different credentials than your new .env!"
+    echo "This WILL cause authentication failures on startup."
+    echo
+    read -p "Remove all existing MAGUS volumes and start fresh? (RECOMMENDED: y/N): " -n 1 -r
+    echo
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        echo -e "${YELLOW}Removing existing volumes...${NC}"
+        FAILED_REMOVALS=""
+        echo "$EXISTING_VOLUMES" | while read vol; do
+            if $DOCKER_CMD volume rm "$vol" 2>/dev/null; then
+                echo -e "${GREEN}✓${NC} Removed $vol"
+            else
+                echo -e "${RED}✗${NC} Could not remove $vol"
+                FAILED_REMOVALS="$FAILED_REMOVALS $vol"
+            fi
+        done
+        
+        if [ ! -z "$FAILED_REMOVALS" ]; then
+            echo -e "${YELLOW}⚠️${NC}  Some volumes couldn't be removed. Try:"
+            echo "   sudo docker compose -f docker-compose.prod.yml down"
+            echo "   sudo docker volume rm magus_postgres_data magus_redis_data"
+        else
+            echo -e "${GREEN}✓${NC} All old volumes removed - fresh start guaranteed"
+        fi
+    else
+        echo -e "${RED}⚠️  WARNING:${NC} Keeping existing volumes will likely cause startup failures!"
+        echo ""
+        echo "Before starting MAGUS, you MUST run:"
+        echo -e "  ${BLUE}sudo docker compose -f docker-compose.prod.yml down${NC}"
+        echo -e "  ${BLUE}sudo docker volume rm magus_postgres_data magus_redis_data${NC}"
+        echo ""
+        echo "Otherwise, database authentication will fail."
+    fi
+fi
+
 echo -e "\n${BLUE}Step 1: Domain Configuration${NC}"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo
