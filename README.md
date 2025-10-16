@@ -490,6 +490,17 @@ docker-compose up -d
 
 ---
 
+## Development Workflow
+
+This project uses a simplified GitFlow branching strategy:
+
+- **`main`** - Stable, production-ready code (what users see)
+- **`develop`** - Integration branch for ongoing development
+- **`feature/*`** - Individual feature development
+- **`release/*`** - Release preparation branches
+
+See [BRANCHING.md](BRANCHING.md) for detailed workflow instructions.
+
 ## Contributing
 
 This is primarily a personal project, but I'm open to:
