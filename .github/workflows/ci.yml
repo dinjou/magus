@@ -162,8 +162,26 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
       
+      - name: Create test .env file
+        run: |
+          cat > .env << EOF
+          DEBUG=False
+          SECRET_KEY=$(python3 -c "from secrets import token_urlsafe; print(token_urlsafe(50))")
+          ALLOWED_HOSTS=localhost,127.0.0.1
+          POSTGRES_DB=magus_test
+          POSTGRES_USER=magus_test
+          POSTGRES_PASSWORD=$(python3 -c "from secrets import token_urlsafe; print(token_urlsafe(32))")
+          REDIS_PASSWORD=$(python3 -c "from secrets import token_urlsafe; print(token_urlsafe(32))")
+          EMAIL_BACKEND=django.core.mail.backends.console.EmailBackend
+          EMAIL_HOST=
+          EMAIL_PORT=587
+          EMAIL_USE_TLS=True
+          EMAIL_HOST_USER=
+          EMAIL_HOST_PASSWORD=
+          DEFAULT_FROM_EMAIL=noreply@localhost
+          EOF
+      
       - name: Test Docker Compose
         run: |
-          cp env.template .env
           docker compose config
 
