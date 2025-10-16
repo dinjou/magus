@@ -261,17 +261,65 @@ SIMPLE_JWT = {
 # CORS CONFIGURATION
 # ==============================================================================
 
-CORS_ALLOWED_ORIGINS = env.list(
-    'CORS_ALLOWED_ORIGINS',
-    default=['http://localhost:3000', 'http://localhost:5173']
-)
+# Build CORS and CSRF origins from ALLOWED_HOSTS automatically
+# This way we only need to maintain ALLOWED_HOSTS
+def _build_origins_from_allowed_hosts(allowed_hosts, schemes=['http', 'https'], include_dev_ports=True):
+    """
+    Automatically build CORS/CSRF origins from ALLOWED_HOSTS.
+    
+    Args:
+        allowed_hosts: List of hostnames/IPs from ALLOWED_HOSTS
+        schemes: List of URL schemes to include (default: http and https)
+        include_dev_ports: If True, adds :5173 and :3000 for localhost (dev mode)
+    
+    Returns:
+        List of full origin URLs (e.g., ['http://localhost', 'https://example.com'])
+    """
+    origins = []
+    
+    for host in allowed_hosts:
+        # Skip wildcards (*, .example.com) - they need special handling
+        if host.startswith('*') or host.startswith('.'):
+            continue
+            
+        for scheme in schemes:
+            origins.append(f'{scheme}://{host}')
+            
+        # Add dev ports for localhost/127.0.0.1 (useful for frontend dev server)
+        if include_dev_ports and host in ['localhost', '127.0.0.1']:
+            for port in [5173, 3000]:  # Vite and CRA default ports
+                for scheme in schemes:
+                    origins.append(f'{scheme}://{host}:{port}')
+    
+    return origins
+
+# Allow manual override via env vars, but default to building from ALLOWED_HOSTS
+# Note: We include both http and https schemes to support all access methods
+# In production, you should redirect HTTP to HTTPS at the reverse proxy level
+
+# Build CORS origins - only use env var if it's actually set (not empty)
+_cors_from_env = env.list('CORS_ALLOWED_ORIGINS', default=[])
+if _cors_from_env:
+    CORS_ALLOWED_ORIGINS = _cors_from_env
+else:
+    CORS_ALLOWED_ORIGINS = _build_origins_from_allowed_hosts(
+        ALLOWED_HOSTS,
+        schemes=['http', 'https'],
+        include_dev_ports=DEBUG
+    )
 
 CORS_ALLOW_CREDENTIALS = True
 
-CSRF_TRUSTED_ORIGINS = env.list(
-    'CSRF_TRUSTED_ORIGINS',
-    default=['http://localhost:3000', 'http://localhost:5173']
-)
+# Build CSRF origins - only use env var if it's actually set (not empty)
+_csrf_from_env = env.list('CSRF_TRUSTED_ORIGINS', default=[])
+if _csrf_from_env:
+    CSRF_TRUSTED_ORIGINS = _csrf_from_env
+else:
+    CSRF_TRUSTED_ORIGINS = _build_origins_from_allowed_hosts(
+        ALLOWED_HOSTS,
+        schemes=['http', 'https'],
+        include_dev_ports=DEBUG
+    )
 
 # ==============================================================================
 # DRF SPECTACULAR (OpenAPI) CONFIGURATION
