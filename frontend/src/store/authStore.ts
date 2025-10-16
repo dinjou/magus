@@ -59,11 +59,7 @@ export const useAuthStore = create<AuthState>((set) => ({
       // Set user
       set({ user: response.user, isAuthenticated: true, isLoading: false })
     } catch (err) {
-      console.error('Registration error:', err)
-      const errorMessage = (err as any).response?.data?.error || 
-                          (err as any).response?.data?.message || 
-                          (err as any).message || 
-                          'Registration failed'
+      const errorMessage = (err as any).response?.data?.error || 'Registration failed'
       set({ error: errorMessage, isLoading: false })
       throw err
     }

@@ -48,21 +48,15 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         """Create user with hashed password"""
-        try:
-            validated_data.pop('password2')
-            user = User.objects.create_user(
-                username=validated_data['username'],
-                email=validated_data['email'],
-                password=validated_data['password'],
-                first_name=validated_data.get('first_name', ''),
-                last_name=validated_data.get('last_name', '')
-            )
-            return user
-        except Exception as e:
-            import logging
-            logger = logging.getLogger(__name__)
-            logger.error(f"User creation error: {str(e)}", exc_info=True)
-            raise serializers.ValidationError(f"User creation failed: {str(e)}")
+        validated_data.pop('password2')
+        user = User.objects.create_user(
+            username=validated_data['username'],
+            email=validated_data['email'],
+            password=validated_data['password'],
+            first_name=validated_data.get('first_name', ''),
+            last_name=validated_data.get('last_name', '')
+        )
+        return user
 
 
 class ProfileSerializer(serializers.ModelSerializer):
