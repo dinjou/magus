@@ -192,6 +192,10 @@ bash scripts/setup.sh
 docker compose -f docker-compose.prod.yml up -d
 # or with sudo: sudo docker compose -f docker-compose.prod.yml up -d
 
+# IMPORTANT: If reinstalling or changing passwords, ALWAYS do:
+#   docker compose -f docker-compose.prod.yml down -v
+# The -v flag removes old volumes to prevent credential mismatches!
+
 # 4. Wait for services to be ready (~30 seconds)
 docker compose -f docker-compose.prod.yml ps
 
@@ -434,13 +438,15 @@ If you see `password authentication failed for user "magus_user"`:
 ```bash
 # This happens when Docker volumes from a previous install have different credentials
 
-# Solution: Remove old volumes and start fresh
-sudo docker compose -f docker-compose.prod.yml down
-sudo docker volume rm magus_postgres_data magus_redis_data
+# Solution: Use -v flag to remove ALL volumes (CRITICAL!)
+sudo docker compose -f docker-compose.prod.yml down -v
 sudo docker compose -f docker-compose.prod.yml up -d
 
-# The database will re-initialize with credentials from your current .env file
+# The -v flag removes all volumes, forcing fresh database initialization
+# with credentials from your current .env file
 ```
+
+**Root Cause:** Docker volumes persist between `docker compose down` and `docker compose up`. When the database volume already exists, PostgreSQL skips initialization and keeps the old password. The `-v` flag is ESSENTIAL for a clean restart.
 
 **Prevention:** The setup script now checks for existing volumes and offers to remove them automatically.
 

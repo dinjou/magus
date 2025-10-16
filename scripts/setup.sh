@@ -252,15 +252,19 @@ echo
 
 echo "🚀 Next Steps:"
 echo
-echo "  1. Start MAGUS:"
+echo "  1. If you have running containers, stop them first:"
+echo -e "     ${BLUE}docker compose -f docker-compose.prod.yml down -v${NC}"
+echo -e "     ${RED}(The -v flag removes old volumes - CRITICAL for fresh start!)${NC}"
+echo
+echo "  2. Start MAGUS:"
 echo -e "     ${BLUE}docker compose -f docker-compose.prod.yml up -d${NC}"
 echo
-echo "  2. Wait for services to be ready (~30 seconds)"
+echo "  3. Wait for services to be ready (~30 seconds)"
 echo
-echo "  3. Open in your browser:"
+echo "  4. Open in your browser:"
 echo -e "     ${BLUE}http://${DOMAINS%%,*}${NC}"
 echo
-echo "  4. Register your account and start tracking!"
+echo "  5. Register your account and start tracking!"
 echo
 
 echo "💡 Useful Commands:"
